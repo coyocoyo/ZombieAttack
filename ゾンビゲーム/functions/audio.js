@@ -89,6 +89,11 @@ document.addEventListener('DOMContentLoaded',
       document.querySelector('#bgm2').play();
     }
 
+    zombieVoive = function () {
+      document.querySelector('#soundZombiVoice').currentTime = 0;
+      document.querySelector('#soundZombiVoice').volume = 1; // 0 ~ 1 で設定する。
+      document.querySelector('#soundZombiVoice').play();
+    }
 
 
 
