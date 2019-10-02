@@ -1,0 +1,218 @@
+@charset "UTF-8";
+
+body {
+  background-color:black;
+  }
+
+html{
+  font:72.5%/1 Meiryo;
+}
+
+body{
+  margin-top:50px;
+}
+
+.game__item {
+  display: none;
+}
+
+.game__start {
+  margin-bottom:10px;
+  top: -12px;
+  height:500px;
+  width:500px;
+  overflow:hidden;
+	margin: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.game__over{
+  display: none;
+  margin-bottom:10px;
+  top: -12px;
+  height:500px;
+  width:500px;
+  overflow:hidden;
+	margin: auto;
+  position: relative;
+  z-index: 10;
+}
+
+#result{
+margin-bottom: 10px;
+top: 460px;
+left: 165px;
+height: 10px;
+width: 200px;
+color: white;
+font-size: 20px;
+position: absolute;
+z-index: 9;
+}
+
+ul{
+  color: lawngreen;
+}
+
+ul li{
+  margin-bottom: 10px;
+  top: 410px;
+  height: 10px;
+width: 100px;
+position: relative;
+  z-index: 9;
+}
+
+.game__wrapper{
+  height:500px;
+  width:500px;
+  margin: auto auto;
+}
+
+.game__inner{
+margin-bottom:10px;
+height:500px;
+width:500px;
+overflow:hidden;
+position:relative;
+}
+
+#cockpit_01 {
+  display: none;
+  left:0;
+  top:0;
+  position:absolute;
+  z-index:10;
+  width: 500px;
+  height: 500px;
+  z-index: 5;
+}
+
+#enemyA0,
+#enemyA1,
+#enemyA2,
+#enemyA3,
+#enemyA4,
+#enemyA5,
+#enemyA6,
+#enemyA7,
+#enemyA8,
+#enemyA9 {
+  left:0;
+  top:0;
+  position:absolute;
+  z-index:-10;
+  width: 10px;
+  height: 10px;
+  left:-500px;
+  top:-500px;
+}
+
+#explosion {
+  left:-500px;
+  top:-500px;
+  position:absolute;
+  z-index:-5;
+}
+
+/* 背景 */
+#bgimg0 {
+  display: none;
+  left:0;
+  top:0;
+  position:absolute;
+  z-index:-20;
+}
+
+/* 照準 */
+#targetScope0 {
+  left:-500px;
+  top:-500px;
+  position:absolute;
+  z-index:0;
+}
+
+#Hit {
+  left:-500px;
+  top:-500px;
+  position:absolute;
+  z-index:-10;
+}
+
+.operation {
+  top: 565px;
+  position: absolute;
+}
+/* 　並べる　*/
+
+
+.game__start .start1 {
+	display: block;
+	margin: 0 auto;
+}
+
+.game__start .start2 {
+	position: absolute;
+	top: 0;
+	left: 0%;
+}
+
+.game__over .over1 {
+	display: block;
+	margin: 0 auto;
+}
+
+.game__over .over2 {
+	position: absolute;
+	top: 0;
+	left: 0px;
+}
+
+/*  keyframs  */
+
+@keyframes game__start {
+	0%{
+    opacity: 1;
+  }
+	50% {
+		opacity: 1;
+	}
+
+}
+
+.game__start img {
+	animation-name: game__start;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	opacity: 0;
+}
+
+.game__start .start2 {
+	animation-delay: 2s;
+}
+
+@keyframes game__over {
+	0%{
+    opacity: 1;
+  }
+	50% {
+		opacity: 1;
+	}
+
+}
+
+.game__over img {
+	animation-name: game__over;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	opacity: 0;
+}
+
+.game__over .over2 {
+	animation-delay: 2s;
+}
+
+
+
+

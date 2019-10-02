@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ゾンビゲーム</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="audio/javascript" src="/functions/audio.js"></script>
+</head>
+
+<body>
+
+  <!-- 音源 -->
+
+  <!-- サンプル 自機の弾の発射音 -->
+  <audio preload="auto" id="soundShoot01">
+    <source src="./audio_files/gun shot.mp3"></audio>
+  <audio preload="auto" id="soundShoot02">
+    <source src="./audio_files/gun shot.mp3"></audio>
+
+  <!--  自機からの攻撃が当たった時の音。撃墜したとは限らない。  -->
+  <audio preload="auto" id="soundHit">
+    <source src="./audio_files/sample_hit.mp3"></audio>
+
+  <!-- サンプル 敵機を撃墜した時の音。爆発音。-->
+  <audio preload="auto" id="soundDestroy">
+    <source src="./audio_files/blood.mp3"></audio>
+
+  <!-- サンプル 自機がダメージを受けた時の音 -->
+  <audio preload="auto" id="soundDamaged">
+    <source src="./audio_files/sample_damaged.mp3"></audio>
+
+  <!--  敵が出てきた時のゾンビの声  -->
+  <audio preload="auto" id="soundZombiVoice">
+    <source src="./audio_files/zombie-voice1.mp3"></audio>
+
+  <!--game play bgm-->
+  <audio preload="auto" id="bgm1" loop>
+    <source src="audio_files/n30.mp3" preload="auto"> </audio>
+
+  <!--game over bgm-->
+  <audio preload="auto" id="bgm2" loop>
+    <source src="audio_files/game over music.mp3" preload="auto"> </audio>
+
+  <!------------------------------------------------->
+
+
+  <div class="game__wrapper">
+
+    <div class="operation"><img src="img/game-operation.jpg"></div>
+    <div class="game__inner">
+
+      <img src="img/man.png" alt="" id="cockpit_01">
+      <img src="img/back-ground-01.jpg" alt="" id="bgimg0">
+      <img src="img/sampleTarget.png" alt="" id="targetScope0"><!-- サンプルです。正方形なら大きさ自由 -->
+
+      <img src="img/zombie.png" alt="" id="enemyA0"><!-- 画像は正方形である必要はないです。 -->
+      <img src="img/zombie.png" alt="" id="enemyA1"><!-- 大きさも自由。当たり判定のため、上下左右の余白は少ないほうがいいです。 -->
+      <img src="img/zombie.png" alt="" id="enemyA2"><!-- 攻撃力、耐久力を個別に設定するので、UFOも隕石も同じA。 -->
+      <img src="img/goast.png" alt="" id="enemyA3">
+      <img src="img/goast.png" alt="" id="enemyA4">
+      <img src="img/piero.png" alt="" id="enemyA5">
+      <img src="img/piero.png" alt="" id="enemyA6">
+      <img src="img/piero.png" alt="" id="enemyA7">
+      <img src="img/goast.png" alt="" id="enemyA8">
+      <img src="img/goast.png" alt="" id="enemyA9"><!-- 今のところ、10種類まで設定可能 -->
+
+      <img src="img/sample_Hit.png" alt="" id="Hit">
+
+      <img src="img/blood-ef.png" alt="" id="explosion">
+
+
+
+      <ul class="game__list">
+        <li id="score" class="game__item">Score：0点</li>
+        <li id="level" class="game__item">Level：1</li>
+        <li id="life" class="game__item">Life : 100</li>
+      </ul>
+
+      <!--ゲームスタート画面-->
+      <div class="game__start">
+        <img class="start1" src="img/title.jpg" alt="start1">
+        <img class="start2" src="img/title2.jpg" alt="start2">
+
+      </div>
+
+      <!--ゲームオーバー画面-->
+      <div class="game__over">
+        <img class="over1" src="img/gameover.jpg" alt="over1">
+        <img class="over2" src="img/gameover2.jpg" alt="over2">
+        <!--リザルト画面-->
+        <div id="result"></div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <!-- 
+  <div>
+操作説明
+マウス移動：(該当方向へ)視点移動
+マウス左クリック ＝ スペースキー：射撃
+キー 「ｚ」：視点ロック(マウスカーソルの位置調整用)
+キー 「1」：視点移動速度 遅
+キー 「2」：視点移動速度 中
+キー 「3」：視点移動速度 速
+キー 「ｘ」：マウスカーソルの表示 on - off
+
+近づいてくるUFO、隕石に照準を合わせ、
+マウス左クリックかスペースキーで攻撃し破壊します。
+UFO、隕石ともに複数回攻撃しないと破壊できません。
+UFO、隕石が接近しすぎると自機がダメージを受けます。
+画面左下の HP が 0 になるとゲームオーバー。
+点数が一定の値に達するとUFO、隕石の近づいてくる速さ上昇、
+同時に数が増えます。
+ゲームクリアーはないので、ひたすら撃ち落としてください。
+
+  </div>
+-->
+
+
+  <script src="functions/freeSpaceA.js"></script>
+  <script src="functions/freeSpaceB.js"></script>
+  <script src="functions/freeSpaceC.js"></script>
+  <script src="functions/functions.js"></script>
+  <script src="functions/mouseMove.js"></script>
+  <script src="functions/keyBoard.js"></script>
+  <script src="functions/audio.js"></script>
+
+
+</body>
+
+</html>
