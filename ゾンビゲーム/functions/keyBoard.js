@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded',
         document.querySelector('.game__over').style.display = 'none';
         playBgm1(); // audio.js の関数呼び出し
 
+
         //初期化も合わせて処理しています
 
       } else if (e.key === '1') { // scrollrate の操作
