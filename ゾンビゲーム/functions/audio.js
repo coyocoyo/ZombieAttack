@@ -19,6 +19,10 @@ let playBgm2; //game overのbgm
 
 let zombieVoive; //ゾンビボイス
 
+let reload; //銃リロード音
+
+let noBullet; //残弾数0の発射音
+
 
 // 外部からの関数を呼び出しを受け止めるために
 // 関数の名前だけグローバルで宣言しておく。
@@ -97,6 +101,19 @@ document.addEventListener('DOMContentLoaded',
       document.querySelector('#soundZombieVoice').volume = 1; // 0 ~ 1 で設定する。
       document.querySelector('#soundZombieVoice').play();
     }
+
+    reload = function () {
+      document.querySelector('#reload').currentTime = 0;
+      document.querySelector('#reload').volume = 1; // 0 ~ 1 で設定する。
+      document.querySelector('#reload').play();
+    }
+
+    noBullet = function () {
+      document.querySelector('#noBullet').currentTime = 0;
+      document.querySelector('#noBullet').volume = 1; // 0 ~ 1 で設定する。
+      document.querySelector('#noBullet').play();
+    }
+
 
 
 

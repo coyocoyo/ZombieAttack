@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded',
 
       } else if (e.key === 'r') {
         remainingBullets = 12;
-        console.log(remainingBullets);
+        reload();
         document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
       } else if (e.key === 'Enter') { // 「Enter」 で敵機の拡大・攻撃スタート
         remainingBullets = 12;
