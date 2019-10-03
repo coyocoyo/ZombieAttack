@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded',
     // グローバルで名前だけ宣言してある関数の本定義
     //function = shoot(){ // ← エラーになる。
     //shoot = function(){ // ← この形は通る。
-    shoot = () => { // アロー関数も通る。アロー関数が今の主流だとか。
+    shoot = () => {
 
       soundShoot(); // audio.js の関数呼び出し
 
