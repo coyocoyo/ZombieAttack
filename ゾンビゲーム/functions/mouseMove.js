@@ -167,6 +167,8 @@ document.addEventListener('DOMContentLoaded',
           } // x座標の当たり処理の閉じ。 xで外れてるならここにくる
         } // for文の閉じ
 
+      } else {
+        noBullet();
       } //remainBulets ifの閉じ
     } // shoot() の閉じ
 

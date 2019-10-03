@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded',
 
     document.addEventListener('keydown', function (e) {
 
+
+
       switch (e.key) {
 
         case 'a':
@@ -107,6 +109,12 @@ document.addEventListener('DOMContentLoaded',
           }
           break;
 
+        case 'r':
+          remainingBullets = 12;
+          reload();
+          document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
+          break;
+
         case 'Enter':
           enemySpeed = 2;
           life = 100;
@@ -118,6 +126,8 @@ document.addEventListener('DOMContentLoaded',
           level = 1;
           lvl = document.getElementById('level');
           lvl.textContent = 'level : ' + level;
+          remainingBullets = 12;
+          document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
 
           firstE = 0;
           lastE = 3;
@@ -134,6 +144,7 @@ document.addEventListener('DOMContentLoaded',
           document.querySelector('#score').style.display = 'block';
           document.querySelector('#level').style.display = 'block';
           document.querySelector('#life').style.display = 'block';
+          document.querySelector('#bullets').style.display = 'block';
           document.querySelector('#targetScope0').style.display = 'block';
           document.querySelector('.game__wrapper').style.display = 'block';
           document.querySelector('.game__over').style.display = 'none';
@@ -168,6 +179,7 @@ document.addEventListener('DOMContentLoaded',
           break;
 
       } // switch文の閉じ
+
 
     }, false); // 'keydown'イベントの閉じ。
 
