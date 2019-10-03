@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded',
 
     document.addEventListener('keydown', function (e) {
 
+<<<<<<< HEAD
       if (e.key === 'a') { // 開発用チートキー
 
         life = -10; // いきなりライフ-10
@@ -157,6 +158,108 @@ document.addEventListener('DOMContentLoaded',
         funcFreeC(); // freeSpaceC のテスト関数呼び出し
 
       }// if文の閉じ
+=======
+      switch (e.key) {
+
+        case 'a':
+          // 開発用チートキー
+          life = -10; // いきなりライフ-10
+          l = document.getElementById('HP');
+          l.textContent = 'HP : ' + life;
+          break;
+
+        case 's':
+          // 開発用チートキー
+          score += 1000; // スコアに1000加算
+          s = document.getElementById('score');
+          s.textContent = 'Score : ' + score;
+          break;
+
+        case ' ': // 空白キー
+          shoot(); // mouseMove.js の関数呼び出し
+          break;
+
+        case 'x':
+          if (mouseCursor === 'auto') {
+            document.body.style.cursor = 'none';
+            mouseCursor = 'none';
+          } else {
+            document.body.style.cursor = 'auto';
+            mouseCursor = 'auto';
+          }
+          break;
+
+        case 'z':
+          if (scrollrate !== 0) {
+            num = scrollrate; // 一旦別の変数に記憶させる。 0.2 , 1 , 5 のうちのどの速さでやってるか分からないので。
+            scrollrate = 0; // 動かなくする。背景・敵機・爆発画像全部が止まる。
+            z_key = 'locked';
+            // 戻し処理は keyupイベントで
+          }
+          break;
+
+        case 'Enter':
+          enemySpeed = 2;
+          life = 100;
+          document.querySelector('#life').innerHTML = 'Life : ' + life;
+          score = 0;
+          s = document.getElementById('score');
+          s.textContent = 'Score : ' + score;
+
+          level = 1;
+          lvl = document.getElementById('level');
+          lvl.textContent = 'level : ' + level;
+
+          firstE = 0;
+          lastE = 3;
+          setEnemies();// mouseMove.js の関数
+          // 配列０番～２番の敵を500x500フレーム内に呼び出して拡大モードにし、他は待機させておく関数
+          enemySizeup(); // function.js の関数。敵機拡大開始
+
+          setTarget();// mouseMove.js の関数。照準設置
+
+          document.querySelector('#result').innerHTML = '';
+          document.querySelector('.game__start').style.display = 'none';
+          document.querySelector('#cockpit_01').style.display = 'block';
+          document.querySelector('#bgimg0').style.display = 'block';
+          document.querySelector('#score').style.display = 'block';
+          document.querySelector('#level').style.display = 'block';
+          document.querySelector('#life').style.display = 'block';
+          document.querySelector('#targetScope0').style.display = 'block';
+          document.querySelector('.game__wrapper').style.display = 'block';
+          document.querySelector('.game__over').style.display = 'none';
+          playBgm1(); // audio.js の関数呼び出し
+          zombieVoive(); // sudio.js の関数呼び出し
+
+          //初期化も合わせて処理しています
+          break;
+
+        case '1':
+          scrollrate = 0.2;
+          break;
+
+        case '2':
+          scrollrate = 1;
+          break;
+
+        case '3':
+          scrollrate = 5;
+          break;
+
+        case '8':
+          funcFreeA(); // freeSpaceA のテスト関数呼び出し
+          break;
+
+        case '9':
+          funcFreeB(); // freeSpaceB のテスト関数呼び出し
+          break;
+
+        case '0':
+          funcFreeC(); // freeSpaceC のテスト関数呼び出し
+          break;
+
+      } // switch文の閉じ
+>>>>>>> 83d9f563e1ef51a0e8aa4196ebab4ea8f7d4d237
 
     }, false); // 'keydown'イベントの閉じ。
 
@@ -169,10 +272,15 @@ document.addEventListener('DOMContentLoaded',
     // 矢印キーの押しっぱなし移動 と ジャンプや弾発射のキー操作 が衝突して問題を起こす。
     document.addEventListener('keyup', function (e) {
 
-      if (e.key === 'z' && z_key === 'locked') {
-        scrollrate = num; // 止めるときに一旦記憶させた値をもどす
-        z_key = 'movable'; // 「動く」の意味
-      } // if文の閉じ
+      switch (e.key) {
+        case 'z':
+
+          if (z_key === 'locked') {
+            scrollrate = num; // 止めるときに一旦記憶させた値をもどす
+            z_key = 'movable'; // 「動く」の意味
+          }
+          break;
+      }
 
     }, false); // keyupイベントリスナーの閉じ
 
