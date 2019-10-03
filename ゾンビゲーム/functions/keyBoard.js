@@ -125,7 +125,14 @@ document.addEventListener('DOMContentLoaded',
         document.querySelector('#targetScope0').style.display = 'block';
         document.querySelector('.game__wrapper').style.display = 'block';
         document.querySelector('.game__over').style.display = 'none';
+<<<<<<< HEAD
         playBgm1(); // audio.js の関数呼び出し
+=======
+
+        playBgm1(); // audio.js の関数呼び出し
+        zombieVoive();
+
+>>>>>>> 7a0aa4b072d8a9486b8dc365014460ddf3903386
 
         //初期化も合わせて処理しています
 
