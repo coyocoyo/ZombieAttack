@@ -72,22 +72,22 @@ const ePop9 = 4; // (隕石型)
 
    /*---- 敵機の拡大最大値を個別設定 ----*/
 
-  const eSizeMax0 = 400; //(UFO型) 画像の横幅がこの値まで大きくなったら自機にダメージ
-  const eSizeMax1 = 400; //(UFO型)
-  const eSizeMax2 = 400; //(UFO型)
-  const eSizeMax3 = 200; //(隕石型)
-  const eSizeMax4 = 200; //(隕石型)
-  const eSizeMax5 = 200; //(隕石型)
-  const eSizeMax6 = 200; //(隕石型)
-  const eSizeMax7 = 200; //(隕石型)
-  const eSizeMax8 = 200; //(隕石型)
-  const eSizeMax9 = 200; //(隕石型)
+  const eSizeMax0 = 200; //(UFO型) 画像の横幅がこの値まで大きくなったら自機にダメージ
+  const eSizeMax1 = 200; //(UFO型)
+  const eSizeMax2 = 200; //(UFO型)
+  const eSizeMax3 = 300; //(隕石型)
+  const eSizeMax4 = 300; //(隕石型)
+  const eSizeMax5 = 300; //(隕石型)
+  const eSizeMax6 = 300; //(隕石型)
+  const eSizeMax7 = 300; //(隕石型)
+  const eSizeMax8 = 300; //(隕石型)
+  const eSizeMax9 = 300; //(隕石型)
 
 /*
 // 今のところ、敵機が横幅200pxまで大きくなったらダメージを受けるようになっているが、
-// enemySizeup(); の 「200」 を "２か所とも" → eSizeMax[i] にすれば、
+// 関数enemySizeup(); の 「200」 を "２か所とも" → eSizeMax[i] にすれば、
 // UFO は横幅200でダメージ、隕石は横幅300でダメージ、など個別に設定できる。
-// 攻撃力、耐久力、スコアも個別設定なので、デカくなる敵を設定できる。
+// 攻撃力、耐久力、スコアも個別設定なので、ボス敵を設定できる。
 */
 
 
