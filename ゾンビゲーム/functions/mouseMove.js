@@ -178,73 +178,75 @@ document.addEventListener('DOMContentLoaded',
     //function = shoot(){ // ← エラーになる。
     //shoot = function(){ // ← この形は通る。
     shoot = () => {
+      if (remainingBullets > 0) {
+        soundShoot(); // audio.js の関数呼び出し
+        remainingBullets -= 1; //残弾数の減少
+        console.log(remainingBullets);
+        document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
+        for (let i = firstE; i < lastE; i++) {
+          target0 = document.querySelector('#targetScope' + 0); // ページロード時のsetTarget();がなくなったので。
+          enemyA[i] = document.querySelector("#enemyA" + i);
+          //console.log(enemyA[i].style.width); // 機能してる
+          //console.log(enemyA[i].style.height); // 機能してる
+          // 元サイズではなく、その時点での縮小サイズ
+          // 小数を含む値だと比べるのに都合が悪いんだろうか？
+          // ログをよく見ると単位'px'がついてる。 ＝ 数値ではなく文字列なので、数値との大小比較はできない。
 
-      soundShoot(); // audio.js の関数呼び出し
-
-      for (let i = firstE; i < lastE; i++) {
-        target0 = document.querySelector('#targetScope' + 0); // ページロード時のsetTarget();がなくなったので。
-        enemyA[i] = document.querySelector("#enemyA" + i);
-        //console.log(enemyA[i].style.width); // 機能してる
-        //console.log(enemyA[i].style.height); // 機能してる
-        // 元サイズではなく、その時点での縮小サイズ
-        // 小数を含む値だと比べるのに都合が悪いんだろうか？
-        // ログをよく見ると単位'px'がついてる。 ＝ 数値ではなく文字列なので、数値との大小比較はできない。
-
-        if ( // x座標の判定
-          ((frameWidth / 2 + target0.width / 2) >= enemyAX[i])
-          &&
-          (enemyAX[i] + enemySizeA[i]) >= (frameWidth / 2 - target0.width / 2)) {
-          // x座標で当たっているなら下の処理に行く。外れているならif文を抜ける。
-          if ( //y座標の判定
-            (frameHeight / 2 + target0.height / 2 - addY) >= enemyAY[i]
+          if ( // x座標の判定
+            ((frameWidth / 2 + target0.width / 2) >= enemyAX[i])
             &&
-            (enemyAY[i] + enemySizeA[i] / (enemyA[i].naturalWidth / enemyA[i].naturalHeight)) >= (frameHeight / 2 - target0.height / 2 - addY)
-          ) {
-            // console.log('座標 ' + enemyAX[i] +',' + enemyAY[i] +' にて enemyA' +i +' に当たり判定');
+            (enemyAX[i] + enemySizeA[i]) >= (frameWidth / 2 - target0.width / 2)) {
+            // x座標で当たっているなら下の処理に行く。外れているならif文を抜ける。
+            if ( //y座標の判定
+              (frameHeight / 2 + target0.height / 2 - addY) >= enemyAY[i]
+              &&
+              (enemyAY[i] + enemySizeA[i] / (enemyA[i].naturalWidth / enemyA[i].naturalHeight)) >= (frameHeight / 2 - target0.height / 2 - addY)
+            ) {
+              // console.log('座標 ' + enemyAX[i] +',' + enemyAY[i] +' にて enemyA' +i +' に当たり判定');
 
-            soundHit(); // audio.jsの関数呼び出し
-            // 命中エフェクト画像を持ってくる
-            HitX = (enemyAX[i] + enemySizeA[i] / 4); // その時の敵機の座標 - ザックリ調整
-            HitY = (enemyAY[i] + enemySizeA[i] / 4); // その時の敵機の座標 - ザックリ調整
-            Hit = document.querySelector('#Hit');
-            Hit.style.left = HitX + 'px';
-            Hit.style.top = HitY + 'px';
-            stopper2 = 1; // この時だけ命中エフェクトも動く
-            timer2 = setTimeout(remove2, 200); // 0.2秒後に remove() へ
-            eRealLife[i]--; // i番の敵機の耐久力－１
+              soundHit(); // audio.jsの関数呼び出し
+              // 命中エフェクト画像を持ってくる
+              HitX = (enemyAX[i] + enemySizeA[i] / 4); // その時の敵機の座標 - ザックリ調整
+              HitY = (enemyAY[i] + enemySizeA[i] / 4); // その時の敵機の座標 - ザックリ調整
+              Hit = document.querySelector('#Hit');
+              Hit.style.left = HitX + 'px';
+              Hit.style.top = HitY + 'px';
+              stopper2 = 1; // この時だけ命中エフェクトも動く
+              timer2 = setTimeout(remove2, 200); // 0.2秒後に remove() へ
+              eRealLife[i]--; // i番の敵機の耐久力－１
 
-            if (eRealLife[i] === 0) { // もし、i番の敵機の耐久力が0ならば
+              if (eRealLife[i] === 0) { // もし、i番の敵機の耐久力が0ならば
 
-              // 爆発
-              soundDestroy(); // audio.jsの呼び出し
-              score += eScore[i];
-              // 敵毎にもらえる点数を個別に設定してる。
-              // enemySizeA[i]がスコープ的にまだ有効なので
-              // eScore[i] - enemySizeA[i] にすると
-              // 「 敵が小さいうちに倒すと高得点 」 にできる。
+                // 爆発
+                soundDestroy(); // audio.jsの呼び出し
+                score += eScore[i];
+                // 敵毎にもらえる点数を個別に設定してる。
+                // enemySizeA[i]がスコープ的にまだ有効なので
+                // eScore[i] - enemySizeA[i] にすると
+                // 「 敵が小さいうちに倒すと高得点 」 にできる。
 
-              //s = document.getElementById('score');
-              //s.textContent = 'Score : ' + score + ''点;
-              //console.log(score);
-              s = document.querySelector('#score');
-              s.textContent = 'Score：' + score + '点';
-              // 爆発画像を持ってくる
-              explosionX = (enemyAX[i] - enemySizeA[i] / 2); // その時の敵機の座標 - ザックリ調整
-              explosionY = (enemyAY[i] - enemySizeA[i] / 2); // その時の敵機の座標 - ザックリ調整
-              popEnemyA(i); // i の値をそのまま引数にしてpopEnemy呼び出し
-              explosion = document.querySelector('#explosion');
-              explosion.style.left = explosionX + 'px';
-              explosion.style.top = explosionY + 'px';
-              stopper1 = 1; // この時だけ爆発も動く
-              timer1 = setTimeout(remove1, 1000); // 1秒後に remove() へ
+                //s = document.getElementById('score');
+                //s.textContent = 'Score : ' + score + ''点;
+                //console.log(score);
+                s = document.querySelector('#score');
+                s.textContent = 'Score：' + score + '点';
+                // 爆発画像を持ってくる
+                explosionX = (enemyAX[i] - enemySizeA[i] / 2); // その時の敵機の座標 - ザックリ調整
+                explosionY = (enemyAY[i] - enemySizeA[i] / 2); // その時の敵機の座標 - ザックリ調整
+                popEnemyA(i); // i の値をそのまま引数にしてpopEnemy呼び出し
+                explosion = document.querySelector('#explosion');
+                explosion.style.left = explosionX + 'px';
+                explosion.style.top = explosionY + 'px';
+                stopper1 = 1; // この時だけ爆発も動く
+                timer1 = setTimeout(remove1, 1000); // 1秒後に remove() へ
 
-            } // if文の閉じ
+              } // if文の閉じ
 
-          } // y座標の当たり処理の閉じ。 yで外れてるならここにくる
-        } // x座標の当たり処理の閉じ。 xで外れてるならここにくる
-      } // for文の閉じ
+            } // y座標の当たり処理の閉じ。 yで外れてるならここにくる
+          } // x座標の当たり処理の閉じ。 xで外れてるならここにくる
+        } // for文の閉じ
 
-
+      } //remainBulets ifの閉じ
     } // shoot() の閉じ
 
     /*--------------------------

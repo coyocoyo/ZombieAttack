@@ -94,8 +94,12 @@ document.addEventListener('DOMContentLoaded',
         scrollrate = 0; // 動かなくする。背景・敵機・爆発画像全部が止まる。
         z_key = 'locked'; // 「動かない」の意keyupイベントが起きたら戻す。
 
+      } else if (e.key === 'r') {
+        remainingBullets = 12;
+        console.log(remainingBullets);
+        document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
       } else if (e.key === 'Enter') { // 「Enter」 で敵機の拡大・攻撃スタート
-
+        remainingBullets = 12;
         enemySpeed = 2;
         life = 100;
         document.querySelector('#life').innerHTML = 'Life : ' + life;
@@ -122,10 +126,11 @@ document.addEventListener('DOMContentLoaded',
         document.querySelector('#score').style.display = 'block';
         document.querySelector('#level').style.display = 'block';
         document.querySelector('#life').style.display = 'block';
+        document.querySelector('#bullets').style.display = 'block';
         document.querySelector('#targetScope0').style.display = 'block';
         document.querySelector('.game__wrapper').style.display = 'block';
         document.querySelector('.game__over').style.display = 'none';
-
+        document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
         playBgm1(); // audio.js の関数呼び出し
         zombieVoive();
 

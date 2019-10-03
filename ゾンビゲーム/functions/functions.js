@@ -156,7 +156,9 @@ const ePop9 = 4; // (隕石型)
   // 初期のフレームと背景の位置関係にも使ってる。
   // 開発中にフレームの寸法が変わったなら、ここも変更する。
 
-  let life = 100;// 自機のHP
+let life = 100;// 自機のHP
+  
+let remainingBullets　= 12; //残弾数
   
   let enemySpeed = 2; // 敵機の拡大の速さ
 
@@ -274,6 +276,7 @@ document.addEventListener('DOMContentLoaded',
           document.querySelector('#cockpit_01').style.display = 'none';
           document.querySelector('#bgimg0').style.display = 'none';
           document.querySelector('#targetScope0').style.display = 'none';
+          document.querySelector('#bullets').style.display = 'none';
           playBgm2(); // audio.js の関数
           document.querySelector('#result').innerHTML = '最終スコア：' + score;
 
