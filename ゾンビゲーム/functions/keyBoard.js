@@ -69,95 +69,6 @@ document.addEventListener('DOMContentLoaded',
     document.addEventListener('keydown', function (e) {
 
 
-      if (e.key === 'a') { // 開発用チートキー
-
-        life = -10; // いきなりライフ-10
-        l = document.getElementById('HP');
-        l.textContent = 'HP : ' + life;
-
-      } else if (e.key === 's') { // 開発用チートキー
-
-        score += 1000; // スコアに1000加算
-        s = document.getElementById('score');
-        s.textContent = 'Score : ' + score;
-
-      } else if (e.key === ' ') {
-        shoot(); // mouseMove.js の関数呼び出し
-      } else if (e.key === 'x' && mouseCursor === 'auto') { // 「x」でマウスカーソルの可視・不可視切り替え
-        document.body.style.cursor = 'none';
-        mouseCursor = 'none'
-      } else if (e.key === 'x' && mouseCursor === 'none') {
-        document.body.style.cursor = 'auto';
-        mouseCursor = 'auto' // 「x」 の処理ここまで
-
-      } else if (e.key === 'z' && scrollrate !== 0) { // 「z」でスクロールロック
-        num = scrollrate; // 一旦別の変数に記憶させる。 0.2 , 1 , 5 のうちのどの速さでやってるか分からないので。
-        scrollrate = 0; // 動かなくする。背景・敵機・爆発画像全部が止まる。
-        z_key = 'locked'; // 「動かない」の意keyupイベントが起きたら戻す。
-
-      } else if (e.key === 'r') {
-        remainingBullets = 12;
-        reload();
-        document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
-      } else if (e.key === 'Enter') { // 「Enter」 で敵機の拡大・攻撃スタート
-        remainingBullets = 12;
-        enemySpeed = 2;
-        life = 100;
-        document.querySelector('#life').innerHTML = 'Life : ' + life;
-        score = 0;
-        s = document.getElementById('score');
-        s.textContent = 'Score : ' + score;
-
-        level = 1;
-        lvl = document.getElementById('level');
-        lvl.textContent = 'level : ' + level;
-
-        firstE = 0;
-        lastE = 3;
-        setEnemies();// mouseMove.js の関数
-        // 配列０番～２番の敵を500x500フレーム内に呼び出して拡大モードにし、他は待機させておく関数
-        enemySizeup(); // function.js の関数。敵機拡大開始
-
-        setTarget();// mouseMove.js の関数。照準設置
-
-        document.querySelector('#result').innerHTML = '';
-        document.querySelector('.game__start').style.display = 'none';
-        document.querySelector('#cockpit_01').style.display = 'block';
-        document.querySelector('#bgimg0').style.display = 'block';
-        document.querySelector('#score').style.display = 'block';
-        document.querySelector('#level').style.display = 'block';
-        document.querySelector('#life').style.display = 'block';
-        document.querySelector('#bullets').style.display = 'block';
-        document.querySelector('#targetScope0').style.display = 'block';
-        document.querySelector('.game__wrapper').style.display = 'block';
-        document.querySelector('.game__over').style.display = 'none';
-
-        document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
-        playBgm1(); // audio.js の関数呼び出し
-        zombieVoive();
-
-        //初期化も合わせて処理しています
-
-      } else if (e.key === '1') { // scrollrate の操作
-        scrollrate = 0.2;
-      } else if (e.key === '2') {
-        scrollrate = 1;
-      } else if (e.key === '3') {
-        scrollrate = 5; // scrollrate の処理ここまで
-
-      } else if (e.key === '8') {
-
-        funcFreeA(); // freeSpaceA のテスト関数呼び出し
-
-      } else if (e.key === '9') {
-
-        funcFreeB(); // freeSpaceB のテスト関数呼び出し
-
-      } else if (e.key === '0') {
-
-        funcFreeC(); // freeSpaceC のテスト関数呼び出し
-
-      }// if文の閉じ
 
       switch (e.key) {
 
@@ -198,6 +109,12 @@ document.addEventListener('DOMContentLoaded',
           }
           break;
 
+        case 'r':
+          remainingBullets = 12;
+          reload();
+          document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
+          break;
+
         case 'Enter':
           enemySpeed = 2;
           life = 100;
@@ -209,6 +126,8 @@ document.addEventListener('DOMContentLoaded',
           level = 1;
           lvl = document.getElementById('level');
           lvl.textContent = 'level : ' + level;
+          remainingBullets = 12;
+          document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
 
           firstE = 0;
           lastE = 3;
@@ -225,6 +144,7 @@ document.addEventListener('DOMContentLoaded',
           document.querySelector('#score').style.display = 'block';
           document.querySelector('#level').style.display = 'block';
           document.querySelector('#life').style.display = 'block';
+          document.querySelector('#bullets').style.display = 'block';
           document.querySelector('#targetScope0').style.display = 'block';
           document.querySelector('.game__wrapper').style.display = 'block';
           document.querySelector('.game__over').style.display = 'none';
