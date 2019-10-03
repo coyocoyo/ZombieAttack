@@ -3,6 +3,8 @@
         マウス移動、初期配置、再配置、
         自機からの攻撃当たり判定
           (座標が関係してくるもの)
+          大きくなり過ぎてる印象あり。
+          分離できんものか。
 -----------------------------------------*/
 
 /*---------------------------
@@ -85,7 +87,7 @@ document.addEventListener('DOMContentLoaded',
      ----*/
     //function removeEnemy(){ // ← これはエラーになる
     //removeEnemy = function(){ // ← これは通る。
-    removeEnemy = (i) => { // アロー関数も通る。関数の呼び合いをするならアロー関数を使用頻度が高いのは分かる気がする。
+    removeEnemy = (i) => { // アロー関数も通る。関数の呼び合いをするならアロー関数の使用頻度が高いのは分かる気がする。
       enemyA[i] = document.querySelector('#enemyA' + i);
       enemyA[i].style.left = -500 + 'px';
       enemyA[i].style.top = -500 + 'px';

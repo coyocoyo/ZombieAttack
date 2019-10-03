@@ -19,69 +19,69 @@ let enemySizeup; // keyBoard.js から呼び出されてる。
 ---------------------------------------*/
 
   /*-- 敵機の耐久力 --*/
-  const eDefaultLife0 = 2; // (UFO型)
-  const eDefaultLife1 = 2; // (UFO型)
-  const eDefaultLife2 = 2; // (UFO型)
-  const eDefaultLife3 = 4; // (隕石型)
-  const eDefaultLife4 = 4; // (隕石型)
-  const eDefaultLife5 = 4; // (隕石型)
-  const eDefaultLife6 = 4; // (隕石型)
-  const eDefaultLife7 = 4; // (隕石型)
-  const eDefaultLife8 = 4; // (隕石型)
-  const eDefaultLife9 = 4; // (隕石型)
+  const eDefaultLife0 = 1; // (ゾンビ)
+  const eDefaultLife1 = 1; // (ゾンビ)
+  const eDefaultLife2 = 2; // (女ゾンビ)
+  const eDefaultLife3 = 2; // (ゴースト)
+  const eDefaultLife4 = 2; // (ゴースト)
+  const eDefaultLife5 = 3; // (ピエロ)
+  const eDefaultLife6 = 4; // (シスター)
+  const eDefaultLife7 = 3; // (ピエロ)
+  const eDefaultLife8 = 4; // (シスター)
+  const eDefaultLife9 = 2; // (ゴースト)
 
   /*-- 敵機の攻撃力 --*/
-  const eAttack0 = 10; // (UFO型)
-  const eAttack1 = 10; // (UFO型)
-  const eAttack2 = 10; // (UFO型)
-  const eAttack3 = 20; // (隕石型)
-  const eAttack4 = 20; // (隕石型)
-  const eAttack5 = 20; // (隕石型)
-  const eAttack6 = 20; // (隕石型)
-  const eAttack7 = 20; // (隕石型)
-  const eAttack8 = 20; // (隕石型)
-  const eAttack9 = 20; // (隕石型)
+  const eAttack0 = 5; // (ゾンビ)
+  const eAttack1 = 5; // (ゾンビ)
+  const eAttack2 = 5; // (女ゾンビ))
+  const eAttack3 = 5; // (ゴースト)
+  const eAttack4 = 5; // (ゴースト)
+  const eAttack5 = 10; // (ピエロ)
+  const eAttack6 = 10; // (シスター)
+  const eAttack7 = 10; // (ピエロ)
+  const eAttack8 = 10; // (シスター)
+  const eAttack9 = 5; // (ゴースト)
 
   /*-- 敵機の得点 --*/
-  const eScore0 = 100; // (UFO型)
-  const eScore1 = 100; // (UFO型)
-  const eScore2 = 100; // (UFO型)
-  const eScore3 = 200; // (隕石型)
-  const eScore4 = 200; // (隕石型)
-  const eScore5 = 200; // (隕石型)
-  const eScore6 = 200; // (隕石型)
-  const eScore7 = 200; // (隕石型)
-  const eScore8 = 200; // (隕石型)
-  const eScore9 = 200; // (隕石型)
+  const eScore0 = 100; // (ゾンビ)
+  const eScore1 = 100; // (ゾンビ)
+  const eScore2 = 100; // (女ゾンビ))
+  const eScore3 = 200; // (ゴースト)
+  const eScore4 = 200; // (ゴースト)
+  const eScore5 = 300; // (ピエロ)
+  const eScore6 = 500; // (シスター)
+  const eScore7 = 300; // (ピエロ)
+  const eScore8 = 500; // (シスター)
+  const eScore9 = 200; // (ゴースト)
 
 
 /*敵のポップポジション*/
 const ePop0 = 2; // (ゾンビ)
 const ePop1 = 2; // (ゾンビ)
-const ePop2 = 2; // (UFO型)
-const ePop3 = 4; // (隕石型)
-const ePop4 = 4; // (隕石型)
-const ePop5 = 4; // (隕石型)
-const ePop6 = 4; // (隕石型)
-const ePop7 = 4; // (隕石型)
-const ePop8 = 4; // (隕石型)
-const ePop9 = 4; // (隕石型)
+const ePop2 = 2; // (女ゾンビ)
+const ePop3 = 4; // (ゴースト)
+const ePop4 = 4; // (ゴースト)
+const ePop5 = 4; // (ピエロ)
+const ePop6 = 4; // (シスター)
+const ePop7 = 4; // (ピエロ)
+const ePop8 = 4; // (シスター)
+const ePop9 = 4; // (ゴースト)
 
 
   /*---- ネタ ----*/
 
    /*---- 敵機の拡大最大値を個別設定 ----*/
 
-  const eSizeMax0 = 200; //(UFO型) 画像の横幅がこの値まで大きくなったら自機にダメージ
-  const eSizeMax1 = 200; //(UFO型)
-  const eSizeMax2 = 200; //(UFO型)
-  const eSizeMax3 = 300; //(隕石型)
-  const eSizeMax4 = 300; //(隕石型)
-  const eSizeMax5 = 300; //(隕石型)
-  const eSizeMax6 = 300; //(隕石型)
-  const eSizeMax7 = 300; //(隕石型)
-  const eSizeMax8 = 300; //(隕石型)
-  const eSizeMax9 = 300; //(隕石型)
+  const eSizeMax0 = 200; //(ゾンビ) 画像の横幅がこの値まで大きくなったら自機にダメージ
+  const eSizeMax1 = 200; //(ゾンビ)
+  const eSizeMax2 = 200; //(女ゾンビ)
+  const eSizeMax3 = 200; //(ゴースト)
+  const eSizeMax4 = 200; //(ゴースト)
+  const eSizeMax5 = 200; //(ピエロ)
+  const eSizeMax6 = 300; //(シスター)
+  const eSizeMax7 = 200; //(ピエロ)
+  const eSizeMax8 = 300; //(シスター)
+  const eSizeMax9 = 200; //(ゴースト)
 
 /*
 // 今のところ、敵機が横幅200pxまで大きくなったらダメージを受けるようになっているが、
@@ -235,8 +235,8 @@ document.addEventListener('DOMContentLoaded',
       //enemyA[i].height = enemySize[i] + "px";
 
       // 拡大処理
-      if (enemySizeA[i] < 200) {
-      //if (enemySizeA[i] < eSizeMax[i]) { // ネタ +++++++++++++++++++++++++++++++++++++++++++++++
+      //if (enemySizeA[i] < 200) {
+      if (enemySizeA[i] < eSizeMax[i]) { // ネタ +++++++++++++++++++++++++++++++++++++++++++++++
         enemySizeA[i] += enemySpeed;
         //console.log(enemySize[i]); //
         enemyA[i].style.width = enemySizeA[i] + "px";
@@ -257,8 +257,8 @@ document.addEventListener('DOMContentLoaded',
       } // if文の閉じ ここまでは正常に機能してる
 
       // ダメージ判定部
-      if (enemySizeA[i] >= 200) {      
-      //if (enemySizeA[i] >= eSizeMax[i]) { // ネタ ++++++++++++++++++++++++++++++++++++++++++++++
+      //if (enemySizeA[i] >= 200) {      
+      if (enemySizeA[i] >= eSizeMax[i]) { // ネタ ++++++++++++++++++++++++++++++++++++++++++++++
               life -= eAttack[i];
        
               //ダメージエフェクト
