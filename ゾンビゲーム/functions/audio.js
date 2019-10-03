@@ -17,10 +17,6 @@ let playBgm1; // BGM1再生
 
 let playBgm2; //game overのbgm
 
-<<<<<<< HEAD
-=======
-let zombieVoive; //ゾンビボイス
->>>>>>> 7b7cb242af856ef04de3648954270e5183ae59d6
 
 // 外部からの関数を呼び出しを受け止めるために
 // 関数の名前だけグローバルで宣言しておく。
