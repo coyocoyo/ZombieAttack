@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded',
 
     document.addEventListener('keydown', function (e) {
 
-<<<<<<< HEAD
+
       if (e.key === 'a') { // 開発用チートキー
 
         life = -10; // いきなりライフ-10
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded',
         funcFreeC(); // freeSpaceC のテスト関数呼び出し
 
       }// if文の閉じ
-=======
+
       switch (e.key) {
 
         case 'a':
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded',
           break;
 
       } // switch文の閉じ
->>>>>>> 83d9f563e1ef51a0e8aa4196ebab4ea8f7d4d237
+
 
     }, false); // 'keydown'イベントの閉じ。
 
