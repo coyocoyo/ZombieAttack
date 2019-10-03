@@ -261,6 +261,15 @@ document.addEventListener('DOMContentLoaded',
       //if (enemySizeA[i] >= eSizeMax[i]) { // ネタ ++++++++++++++++++++++++++++++++++++++++++++++
               life -= eAttack[i];
        
+              //ダメージエフェクト
+              document.querySelector('.manDamage').style.display = 'block';
+  
+        let damageNone = function () {
+          document.querySelector('.manDamage').style.display = 'none';
+        }
+        setTimeout(damageNone, 5000);
+        
+
         if (life > 0) {
           console.log('Life : ' + life);
           document.querySelector('#life').textContent = 'Life：' + life;
