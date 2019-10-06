@@ -11,194 +11,6 @@ let enemySizeup; // keyBoard.js から呼び出されてる。
   // グローバルで名前だけ宣言しておく。
   // 本体はローカルの中 ↓↓
 
-
-/* グローバル変数・定数コーナー */
-/*---------------------------------------
-      複数のjsファイルから参照されたり、
-      開発中に微調整される変数
----------------------------------------*/
-
-  /*-- 敵機の耐久力 --*/
-  const eDefaultLife0 = 1; // (ゾンビ)
-  const eDefaultLife1 = 1; // (ゾンビ)
-  const eDefaultLife2 = 2; // (女ゾンビ)
-  const eDefaultLife3 = 2; // (ゴースト)
-  const eDefaultLife4 = 2; // (ゴースト)
-  const eDefaultLife5 = 3; // (ピエロ)
-  const eDefaultLife6 = 4; // (シスター)
-  const eDefaultLife7 = 3; // (ピエロ)
-  const eDefaultLife8 = 4; // (シスター)
-  const eDefaultLife9 = 2; // (ゴースト)
-
-  /*-- 敵機の攻撃力 --*/
-  const eAttack0 = 5; // (ゾンビ)
-  const eAttack1 = 5; // (ゾンビ)
-  const eAttack2 = 5; // (女ゾンビ))
-  const eAttack3 = 5; // (ゴースト)
-  const eAttack4 = 5; // (ゴースト)
-  const eAttack5 = 10; // (ピエロ)
-  const eAttack6 = 10; // (シスター)
-  const eAttack7 = 10; // (ピエロ)
-  const eAttack8 = 10; // (シスター)
-  const eAttack9 = 5; // (ゴースト)
-
-  /*-- 敵機の得点 --*/
-  const eScore0 = 100; // (ゾンビ)
-  const eScore1 = 100; // (ゾンビ)
-  const eScore2 = 100; // (女ゾンビ))
-  const eScore3 = 200; // (ゴースト)
-  const eScore4 = 200; // (ゴースト)
-  const eScore5 = 300; // (ピエロ)
-  const eScore6 = 500; // (シスター)
-  const eScore7 = 300; // (ピエロ)
-  const eScore8 = 500; // (シスター)
-  const eScore9 = 200; // (ゴースト)
-
-
-/*敵のポップポジション*/
-const ePop0 = 2; // (ゾンビ)
-const ePop1 = 2; // (ゾンビ)
-const ePop2 = 2; // (女ゾンビ)
-const ePop3 = 4; // (ゴースト)
-const ePop4 = 4; // (ゴースト)
-const ePop5 = 4; // (ピエロ)
-const ePop6 = 4; // (シスター)
-const ePop7 = 4; // (ピエロ)
-const ePop8 = 4; // (シスター)
-const ePop9 = 4; // (ゴースト)
-
-
-  /*---- ネタ ----*/
-
-   /*---- 敵機の拡大最大値を個別設定 ----*/
-
-  const eSizeMax0 = 200; //(ゾンビ) 画像の横幅がこの値まで大きくなったら自機にダメージ
-  const eSizeMax1 = 200; //(ゾンビ)
-  const eSizeMax2 = 200; //(女ゾンビ)
-  const eSizeMax3 = 200; //(ゴースト)
-  const eSizeMax4 = 200; //(ゴースト)
-  const eSizeMax5 = 200; //(ピエロ)
-  const eSizeMax6 = 300; //(シスター)
-  const eSizeMax7 = 200; //(ピエロ)
-  const eSizeMax8 = 300; //(シスター)
-  const eSizeMax9 = 200; //(ゴースト)
-
-/*
-// 今のところ、敵機が横幅200pxまで大きくなったらダメージを受けるようになっているが、
-// 関数enemySizeup(); の 「200」 を "２か所とも" → eSizeMax[i] にすれば、
-// UFO は横幅200でダメージ、隕石は横幅300でダメージ、など個別に設定できる。
-// 攻撃力、耐久力、スコアも個別設定なので、ボス敵を設定できる。
-*/
-
-
-    // for文で使うので配列に入れておく
-
-  let eDefaultLife = [ // 手動で入れるしかないんだろうか。
-  eDefaultLife0,
-  eDefaultLife1,
-  eDefaultLife2,
-  eDefaultLife3,
-  eDefaultLife4,
-  eDefaultLife5,
-  eDefaultLife6,
-  eDefaultLife7,
-  eDefaultLife8,
-  eDefaultLife9];
-
-  let eAttack = [
-  eAttack0,
-  eAttack1,
-  eAttack2,
-  eAttack3,
-  eAttack4,
-  eAttack5,
-  eAttack6,
-  eAttack7,
-  eAttack8,
-  eAttack9];
-
-  let eScore = [
-  eScore0,
-  eScore1,
-  eScore2,
-  eScore3,
-  eScore4,
-  eScore5,
-  eScore6,
-  eScore7,
-  eScore8,
-  eScore9];
-
-  let eSizeMax = [
-  eSizeMax0,
-  eSizeMax1,
-  eSizeMax2,
-  eSizeMax3,
-  eSizeMax4,
-  eSizeMax5,
-  eSizeMax6,
-  eSizeMax7,
-  eSizeMax8,
-  eSizeMax9];
-
-  const enemyA_Max = 10;
-  // src を書き換えただけなら、耐久力・攻撃力・スコアの書き換えでOK。
-  // 敵機の最大数 (htmlに設置した id の数)
-  // Bタイプはないです。
-
-  /*-- その他、微調整用変数 --*/
-
-  const frameHeight = 500; //px フレームの縦の長さ
-  const frameWidth = 500; //px フレームの横の長さ
-  // フレームの縦幅、横幅を自動的に取得するコマンドを知らないので手動で入力する。
-  // style.width とかで取得できるかも。
-  // マウス移動による背景移動の限界値計算に使ってる。
-  // 初期のフレームと背景の位置関係にも使ってる。
-  // 開発中にフレームの寸法が変わったなら、ここも変更する。
-
-let life = 100;// 自機のHP
-  
-let remainingBullets　= 12; //残弾数
-  
-  let enemySpeed = 2; // 敵機の拡大の速さ
-
-  let level = 0;
-  // ゲームの段階を示す変数
-  // ページロード直後 ＝ 0、
-  // ゲーム開始直後に 1 、点数が上がると 2,3,4,5 が代入される。
-
-  const addY = 70;
-  // 照準は画面中央よりやや高め。
-  // 照準を何ピクセル上にするか調整する変数。
-
-  let scrollrate = 1;
-  // 背景画像の移動速度係数。かけ算で処理される。
-  // キー操作 「1」 「2」 「3」 でも変更可能
-
-  const interval = 20;
-  // マウス移動の計算間隔で使っている。
-  // なんとなく 20 。処理が重いなら遅くする可能性あり。
-
-  // 出てくる敵機の種類調整
-  let firstE = 0; // 配列の中の何番から何番までの敵を出現させるか、の最初の数。初期値　0
-  let lastE = 0; // 配列の中の何番から何番までの敵を出現させるか、の最後の数。初期値 3
-  /* (例)
-  firstE = 0 、 lastE = 3 の場合、
-  配列の中の　0番 , 1番 , 2番 が500x500フレーム内で動く。他は待機場所で待機
-  */
-
-  let score = 0; // 得点
-
-  let enemyA = [];
-  // 敵機の要素取得用
-  // function.js と mouseMove.js が共用してる。
-  // getElementById や querySelector で要素をその都度入れてる。
-  // それぞれのローカルで同名の変数を宣言しても問題ない。どちらもローカルなら。
-
-  let enemySizeA = [];
-  // 各敵の大きさを入れておく。 function.js と mouseMove.js で使ってる。
-  // 同一の数値を参照したいので、これはグローバルに置くのが安全。
-
 /*------------------------------------
 　　　　グローバルブロックここまで
 ------------------------------------*/
@@ -215,7 +27,19 @@ document.addEventListener('DOMContentLoaded',
   function () {
     'use strict';
 
-  let timer2; // 敵機の拡大処理、自機の被ダメージ判定で使用
+    let timer2; // 敵機の拡大処理、自機の被ダメージ判定で使用
+
+    let lvl; // 画面上の Score 表示要素格納
+    lvl = document.querySelector('#level'); // 格納しとく
+
+    let l; // 画面上の Life 表示要素格納
+    l = document.querySelector('#life'); // 格納しとく
+
+    let largestEnemy; // レーダー試作で使用
+    let largestEnemyX; // レーダー試作で使用
+    let largestEnemyY; // レーダー試作で使用
+
+
 
 /*------------------------------------------------
 　　　　            敵の拡大、攻撃処理
@@ -223,132 +47,378 @@ document.addEventListener('DOMContentLoaded',
 
   //function enemySize(){ // ← これはエラーになる
   //enemySizeup = function(){ // ← これは通る。
-  enemySizeup = () => { // アロー関数も通る。アロー関数が最近は主流らしい。
+    enemySizeup = () => { // アロー関数も通る。アロー関数が最近は主流らしい。
+      // このenemySizeup内の処理は、ゲーム中は100ミリ秒毎に繰り返される。
 
-    clearTimeout(timer2);
-    // これがないと、敵の種類を変えるごとに拡大が加速する。
-
-    for (let i = firstE ; i < lastE ; i++) {
-      enemyA[i] = document.querySelector("#enemyA" + i);
+      
+      for (let i = firstE ; i < lastE ; i++) { // 敵の番号 i が必要な処理はここの中に。
+      //enemyA[i] = document.querySelector("#enemyA" + i); // ページロードじに全要素格納済み。global.jsのグローバル変数宣言で。
       // 敵の拡大部
       //enemyA[i].width = enemySize[i] + "px";
       //enemyA[i].height = enemySize[i] + "px";
 
-      // 拡大処理
-      //if (enemySizeA[i] < 200) {
-      if (enemySizeA[i] < eSizeMax[i]) { // ネタ +++++++++++++++++++++++++++++++++++++++++++++++
-        enemySizeA[i] += enemySpeed;
-        //console.log(enemySize[i]); //
-        enemyA[i].style.width = enemySizeA[i] + "px";
-        enemyA[i].style.height = enemySizeA[i]/(enemyA[i].naturalWidth/enemyA[i].naturalHeight) + "px";
-        //console.log(enemyA[i].style.width);
-        //console.log(enemyA[i].style.height);
-        
-        
-         let bgimg = new Image();
-         bgimg.src = document.getElementById('bgimg' + 0).src;
-        
-        if (i >= 3 && i <= 7) {
-          enemyA[i].style.top = (bgimg.height - enemySizeA[i] / (enemyA[i].naturalWidth / enemyA[i].naturalHeight) + 'px');
-       
-          console.log(bgimg.height);
-        }
+        // 拡大処理
+        if (enemySizeA[i] < 200) {
+        //if (enemySizeA[i] < eSizeMax[i]) { // ネタ +++++++++++++++++++++++++++++++++++++++++++++++
+          enemySizeA[i] += eSpeed[i];
+          //console.log(enemySize[i]); //
+          enemyA[i].style.width = enemySizeA[i] + "px";
+          enemyA[i].style.height = enemySizeA[i]/(enemyA[i].naturalWidth/enemyA[i].naturalHeight) + "px";
+          //console.log(enemyA[i].style.width);
+          //console.log(enemyA[i].style.height);
+        } // if文の閉じ ここまでは正常に機能してる
 
-      } // if文の閉じ ここまでは正常に機能してる
+        // ダメージ判定部
+        if (enemySizeA[i] >= 200) {      
+        //if (enemySizeA[i] >= eSizeMax[i]) { // ネタ ++++++++++++++++++++++++++++++++++++++++++++++
 
-      // ダメージ判定部
-      //if (enemySizeA[i] >= 200) {      
-      if (enemySizeA[i] >= eSizeMax[i]) { // ネタ ++++++++++++++++++++++++++++++++++++++++++++++
-              life -= eAttack[i];
-       
-              //ダメージエフェクト
-              document.querySelector('.manDamage').style.display = 'block';
-  
-        let damageNone = function () {
-          document.querySelector('.manDamage').style.display = 'none';
-        }
-        setTimeout(damageNone, 5000);
-        
-
-        if (life > 0) {
-          console.log('Life : ' + life);
-          document.querySelector('#life').textContent = 'Life：' + life;
-          soundDamaged(); // audio.js の関数
+          life -= eAttack[i];
           popEnemyA(i); // mouseMove.js の関数
-          // for文用の i を引数にして敵のリポップ関数を呼び出し。機能してるっぽい。
-        } else {
-          //document.querySelector('.game__wrapper').style.display = 'none';
-          document.querySelector('.game__over').style.display = 'block';
-          document.querySelector('#score').style.display = 'none';
-          document.querySelector('#level').style.display = 'none';
-          document.querySelector('#life').style.display = 'none';
-          document.querySelector('#cockpit_01').style.display = 'none';
-          document.querySelector('#bgimg0').style.display = 'none';
-          document.querySelector('#targetScope0').style.display = 'none';
-          document.querySelector('#bullets').style.display = 'none';
-          playBgm2(); // audio.js の関数
-          document.querySelector('#result').innerHTML = '最終スコア：' + score;
+          // ここでenemySizeA[i] には10が代入されるので、
+          // このif文が100ミリ秒毎に繰り返されてる、ということはないと思う。
+          // 敵機は小さいのが再ポップしてる。
+       
+          //ダメージエフェクト
+          let manDamage = document.querySelector('.manDamage');
+          manDamage.style.display = 'block';
+  
+          let damageNone = function () {
+            manDamage.style.display = 'none';
+          } // damageNone の閉じ
 
-          // 全ての敵機を待機位置に。
-          firstE = 0;
-          lastE = 0;
-          setEnemies();// mouseMove.js の関数
-    
-        }
+          setTimeout(damageNone, 3000);
+
+
+          recoil = -100; // 反動は大きく
+          Player.style.left = recoil + 'px';
+          Player.style.top = -1*(recoil/2) + 'px';  // 10px反動。元の座標が left:0 なので。
+          recovery = 'yet'; // 反動のため、「まだ撃てない」の状態に。 
+          recover(); // weapon.js の関数。反動からの復元処理
+
+          
+          if (life > 0) {
+            //console.log('Life : ' + life);
+            l.textContent = 'Life：' + life;
+            soundDamaged1(); // audio.js の関数
+            
+            // for文用の i を引数にして敵のリポップ関数を呼び出し。機能してるっぽい。
+          } // if文の閉じ  
+
+        } // if文の閉じ
+        
+      } // for文の閉じ
+
+      if (life < 0){ // ゲームオーバー処理 100ミリ秒毎にチェックされてる。
+        //document.querySelector('.game__wrapper').style.display = 'none';
+        document.querySelector('.game__over').style.display = 'block';
+        document.querySelector('#score').style.display = 'none';
+        lvl.style.display = 'none'; // ローカル変数宣言で要素取得済み
+        l.style.display = 'none'; // 要素はローカルで取得済み
+        Player.style.display = 'none';
+        document.querySelector('#bgimg0').style.display = 'none';
+        document.querySelector('#targetScope0').style.display = 'none';
+        Bullets.style.display = 'none'; // グローバルで要素取得済み
+        BulletStock.style.display = 'none'; // グローバルで要素取得済み
+        playBgm2(); // audio.js の関数
+        document.querySelector('#result').textContent = '最終スコア：' + score;
+
+
+
+        // 全ての敵機を待機位置に。
+        level = 0;
+        firstE = 0;
+        lastE = 0;
+        setEnemies();// mouseMove.js の関数
+
+        callTrickA = 100; // 逆さまオバケ出現管理用 出ないようにするだけ。
+
+        aLeft.style.display = 'none'; // 警告矢印消し。機能してないような・・・。 
+        aRight.style.display = 'none';
+        aTop.style.display = 'none';
+        aBottom.style.display = 'none';
+
+
+
 
       } // if文の閉じ
-    } // for文の閉じ
+
+
+      // 逆さまオバケ出現条件
+      if (score >= 800 && callTrickA === 0　) { // 800点以上かつ管理変数の値が０ならば
+        trickA_1_Down(); // trickA.js の関数。 逆さまオバケ出現 
+        callTrickA = 1; // 条件外し。これがないと0.2秒ごとに出現する。 
+      } else if (score >= 2200 && callTrickA === 1　) {
+        trickA_1_Down(); // 逆さまオバケ
+        callTrickA = 2; 
+      } else if (score >= 4000 && callTrickA === 2　) {
+        trickA_2_Down(); // ピエロ
+        callTrickA = 3;
+      } else if (score >= 6500 && callTrickA === 3　) {
+        trickA_2_Down(); // ピエロ
+        callTrickA = 4;
+      } else if (score >= 9000 && callTrickA === 4　) {
+        trickA_1_Down(); // オバケ
+        callTrickA = 5;
+      } else if (score >= 12000 && callTrickA === 5　) {
+        trickA_2_Down(); // ピエロ
+        callTrickA = 6;
+      } else if (score >= 16000 && callTrickA === 6　) {
+        trickA_1_Down(); // オバケ
+        callTrickA = 7;
+      } // else if 文の閉じ
+      // GameStart時、GameOver時に callTrickA を０にしておく。
 
  /*--------------------------------------------------------------------------------------
 
-              要調整部分　スコアによる敵機再配置　どれくらいがゲームとしてちょうどいいのか
- 
+              要調整部分　スコアによる敵機再配置　どれくらいがゲームとしてちょうどいいのか。
+              ちなみに、このあたりの行もまだ enemySizeup(); の中。
+              setTimeoutで200ミリ秒毎に巡回される処理群
+
   --------------------------------------------------------------------------------------*/
 
-    /*---- スコアによる敵機の再配置 ----*/
-    if (score >= 1000 && level === 1) {
-      level = 2;
-      document.getElementById('level').textContent = 'level : ' + level;
-      enemySpeed = 4;
-      firstE = 0;
-      lastE = 4;
-      setEnemies(); // mouseMove.js の関数(first と last で指定された範囲の敵機をフレーム内に配置する。)
-      enemySizeup(); // 拡大開始
-    } else if (score >= 2000 && level === 2) {
-      level = 3;
-      document.getElementById('level').textContent = 'level : ' + level;
-      enemySpeed = 6;
-      firstE = 1;
-      lastE = 5;
-      setEnemies(); //  mouseMove.js の関数
-      enemySizeup(); // 拡大開始
-    } else if (score >= 3000 && level === 3) {
-      level = 4;
-      document.getElementById('level').textContent = 'level : ' + level;
-      enemySpeed = 8;
-      firstE = 2;
-      lastE = 6;
-      setEnemies(); //  mouseMove.js の関数
-      enemySizeup(); // 拡大開始
-    } else if (score >= 4000 && level === 4) {
-      level = 5;
-      document.getElementById('level').textContent = 'level : ' + level;
-      enemySpeed = 10;
-      firstE = 4;
-      lastE = 10;
-      setEnemies(); // mouseMove.js の関数
-      enemySizeup(); // 拡大開始
-    }
+      /*---- スコアによる敵機の再配置 ----*/
+      // 100ミリ秒毎にチェックされてる。
+      if (score >= 1000 && level === 1) {
+        //clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 2;
+        lvl.textContent = 'level : ' + level;
+        // enemySpeed = 1;
+        firstE = 1;
+        lastE = 4;
+        setEnemies(); // mouseMove.js の関数(first と last で指定された範囲の敵機をフレーム内に配置する。)
+        enemySizeup(); // 拡大開始
+      } else if (score >= 2000 && level === 2) {
+        clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 3;
+        lvl.textContent = 'level : ' + level;
+        //enemySpeed = 2;
+        firstE = 2;
+        lastE = 5;
+        setEnemies(); //  mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 3000 && level === 3) {
+        clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 4;
+        lvl.textContent = 'level : ' + level;
+        //enemySpeed = 2;
+        firstE = 4;
+        lastE = 7;
+        setEnemies(); //  mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 4000 && level === 4) {
+        clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 5;
+        lvl.textContent = 'level : ' + level;
+        //enemySpeed = 6;
+        firstE = 5;
+        lastE = 8;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 5000 && level === 5) {
+        clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 6;
+        lvl.textContent = 'level : ' + level;
+        //enemySpeed = 6;
+        firstE = 6;
+        lastE = 9;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 6000 && level === 6) {
+        clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 7;
+        lvl.textContent = 'level : ' + level;
+        //enemySpeed = 6;
+        firstE = 6;
+        lastE = 10;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 7000 && level === 7) {
+        clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 8;
+        lvl.textContent = 'level : ' + level;
+        //enemySpeed = 6;
+        firstE = 5;
+        lastE = 10;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 8000 && level === 8) {
+        clearTimeout(timer2);
+        //clearInterval(timer2);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 9;
+        lvl.textContent = 'level : ' + level;
+        //enemySpeed = 6;
+        firstE = 0;
+        lastE = 7;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } // else if 文の閉じ
 
-    timer2 = setTimeout(enemySizeup, 200);
-    // console.log('関数enemySizeupが呼び出されました');
-    // こいつが元凶だった・・・。
-    // setInterval なら繰り返し処理なので、処理の閉じカッコ 「 } 」 の後に配置するべき。
-    // setTimeout は１回きりなので、全部の処理が終わる直前に入れる。
+     　/*---------------------------
+        スコアによる敵の再配置ここまで
+　　　　 ----------------------------*/
 
-  } // enemySizeup の閉じ
-  // timer2 = setInterval(enemySizeup, 200);
-//-----敵の拡大、攻撃処理 ここまで
+
+
+
+
+ 　　　　/*---------------------------
+          この200ミリ秒ループの中に
+           レーダーを試作する。
+　　　　 ----------------------------*/
+
+      // 拡大でサイズが最大になってる敵を"特定"したい。値が欲しいわけではない。
+      // 場外の敵は一律 10px になるようにした。
+
+
+
+
+      
+      largestEnemy  = Math.max(
+        enemySizeA[0],
+        enemySizeA[1],
+        enemySizeA[2],
+        enemySizeA[3],
+        enemySizeA[4],
+        enemySizeA[5],
+        enemySizeA[6],
+        enemySizeA[7],
+        enemySizeA[8],
+        enemySizeA[9],
+        );
+      // console.log(largestEnemy); // ズラズラと数字が出続ける。１０～
+      
+
+      
+      switch (largestEnemy){
+
+        case enemySizeA[0]: // ← 機能すればいいが。
+        largestEnemyX = enemyAX[0];
+        largestEnemyY = enemyAY[0];
+        //console.log(' 0 番マーク中');
+        break;
+
+        case enemySizeA[1]:
+        largestEnemyX = enemyAX[1];
+        largestEnemyY = enemyAY[1];
+        //console.log(' 1 番マーク中');
+        break;
+
+        case enemySizeA[2]:
+        largestEnemyX = enemyAX[2];
+        largestEnemyY = enemyAY[2];
+        //console.log(' 2 番マーク中');
+        break;
+
+        case enemySizeA[3]:
+        largestEnemyX = enemyAX[3];
+        largestEnemyY = enemyAY[3];
+        //console.log(' 3 番マーク中');
+        break;
+
+        case enemySizeA[4]:
+        largestEnemyX = enemyAX[4];
+        largestEnemyY = enemyAY[4];
+        //console.log(' 4 番マーク中');
+        break;
+
+        case enemySizeA[5]:
+        largestEnemyX = enemyAX[5];
+        largestEnemyY = enemyAY[5];
+        //console.log(' 5 番マーク中');
+        break;
+
+        case enemySizeA[6]:
+        largestEnemyX = enemyAX[6];
+        largestEnemyY = enemyAY[6];
+        //console.log(' 6 番マーク中');
+        break;
+
+        case enemySizeA[7]:
+        largestEnemyX = enemyAX[7];
+        largestEnemyY = enemyAY[7];
+        //console.log(' 7 番マーク中');
+        break;
+
+        case enemySizeA[8]:
+        largestEnemyX = enemyAX[8];
+        largestEnemyY = enemyAY[8];
+        //console.log(' 8 番マーク中');
+        break;
+
+        case enemySizeA[9]:
+        largestEnemyX = enemyAX[9];
+        largestEnemyY = enemyAY[9];
+        //console.log(' 9 番マーク中');
+        break;                                
+
+      } // switch の閉じ
+      
+      if ( largestEnemyX <= 0 && aLeft.style.display === 'none' && life > 0){ // 左の画面外にいるならば
+        //console.log('左アラート');
+        aLeft.style.display = 'block';
+        aRight.style.display = 'none'; // 無駄な記述かもしれない。
+        aTop.style.display = 'none';
+        aBottom.style.display = 'none';
+
+      } else if ( largestEnemyX >= frameWidth && aRight.style.display === 'none' && life > 0){ // 右の画面外にいるならば
+        //console.log('右アラート');
+        aLeft.style.display = 'none';
+        aRight.style.display = 'block';
+        aTop.style.display = 'none';
+        aBottom.style.display = 'none';
+
+      } else if ( largestEnemyY <= 0 && aTop.style.display === 'none' && life > 0){ // 上の画面外にいるならば
+        //console.log('上アラート');
+        aLeft.style.display = 'none';
+        aRight.style.display = 'none';        
+        aTop.style.display = 'block';
+        aBottom.style.display = 'none';
+
+      } else if ( largestEnemyY >= frameHeight && aBottom.style.display === 'none' && life > 0) { // 下の画面外にいるならば
+        //console.log('下アラート');
+        aLeft.style.display = 'none';
+        aRight.style.display = 'none';        
+        aTop.style.display = 'none';
+        aBottom.style.display = 'block';
+      } else if (largestEnemyX >= 0 && largestEnemyX <= frameWidth && largestEnemyY >= 0 && largestEnemyY <= frameHeight){ 
+        // マークしてる敵が画面内にいるならば
+        aLeft.style.display = 'none';
+        aRight.style.display = 'none';
+        aTop.style.display = 'none';
+        aBottom.style.display = 'none';
+        // 全部消せ、の意  
+      }
+
+ 　　　　/*---------------------------
+          レーダーここまで
+　　　　 ----------------------------*/
+
+
+
+
+      timer2 = setTimeout(enemySizeup, 200);
+      // console.log('関数enemySizeupが呼び出されました');
+      // setInterval なら繰り返し処理なので、処理の閉じカッコ 「 } 」 の後に配置するべき。
+      // setTimeout は１回きりなので、全部の処理が終わる直前に入れるとループになる。
+
+    } // enemySizeup の閉じ
+    //timer2 = setInterval(enemySizeup, 100);
+  //-----敵の拡大、攻撃処理 ここまで
 
 
   /*------------------

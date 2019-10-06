@@ -4,11 +4,15 @@
 
 /*
 
-キー 「 a 」 : 開発用チートキー。「 いきなり life = 0 」
+キー 「 a 」 : 開発用チートキー。「 いきなり life = -10 」(機能していなかったが、現在は修正済み。)
 キー 「 s 」 : 開発用チートキー。「 スコアに1000加算 」
+キー 「 d 」 : 開発用チートキー。「 逆さまオバケ呼び出し 」
+キー 「 u 」 : 開発用チートキー。「 逆さまオバケ撃退 」
 
 スペースキー 「 」 : 当たり判定処理。＝自機の射撃。
-マウスクリックは「要素の全選択」みたいになって画面が真っ青になることがある。。
+マウスクリックは「要素の全選択」みたいになって画面が真っ青になることがある。
+
+キー 「 c 」 : 武器変更
 
 キー 「 Enter 」 : 敵機の拡大開始。 ゲームスタートに近い。
 
@@ -25,7 +29,7 @@
 画面上のマウスカーソルの可視・不可視切り替え。役に立ってない。
 
 キー 「 z 」
-背景画像・敵機・爆発のマウス追従をストップする
+背景・敵機・命中エフェクト・爆発エフェクトのマウス追従をストップする
 
 */
 
@@ -60,35 +64,48 @@ document.addEventListener('DOMContentLoaded',
     let mouseCursor = 'auto';
     // マウスカーソルの可視・不可視切り替え用。'none' か 'auto'かの文字列を格納。初期値:auto
 
-    let l; // 画面上の life 表示要素取得用
+    let l; // 画面上の Life 表示要素格納用
+    l = document.querySelector('#life'); // 格納しとく
 
-    let s; // 画面上の score 表示要素取得用
+    let s; // 画面上の Score 表示要素格納用
+    s = document.querySelector('#score'); // 格納しとく
 
-    let lvl; // 画面上の level 要素取得用
+    let lvl; // 画面上の Level 表示要素格納用
+    lvl = document.querySelector('#level'); // 格納しとく
 
     document.addEventListener('keydown', function (e) {
 
-
-
       switch (e.key) {
 
-        case 'a':
-          // 開発用チートキー
+        case 'a': // 開発用チートキー
           life = -10; // いきなりライフ-10
-          l = document.getElementById('HP');
-          l.textContent = 'HP : ' + life;
           break;
 
-        case 's':
-          // 開発用チートキー
+        case 's': // 開発用チートキー
           score += 1000; // スコアに1000加算
-          s = document.getElementById('score');
-          s.textContent = 'Score : ' + score;
+          s.textContent = 'Score : ' + score; // s の要素はローカル変数宣言のところで取得済み。
           break;
+
+        case 'd': // 開発用チートキー
+          trickA_2_Down(); // 逆さまオバケ２登場
+          break;       
+
+        case 'u': // 開発用チートキー
+          text_esc.style.display = 'none';
+          text_Ins.style.display = 'none';
+          text_v.style.display = 'none';
+          a1Up(); // 逆さまオバケ１を上に撃退
+          a2Up(); // 逆さまオバケ２を上に撃退
+          break;     
 
         case ' ': // 空白キー
           shoot(); // mouseMove.js の関数呼び出し
           break;
+
+
+        case 'c':
+          changeWeapon(); // weapon.js の関数呼び出し
+          break;  
 
         case 'x':
           if (mouseCursor === 'auto') {
@@ -110,48 +127,58 @@ document.addEventListener('DOMContentLoaded',
           break;
 
         case 'r':
-          remainingBullets = 12;
+
           reload();
-          document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
           break;
 
         case 'Enter':
-          enemySpeed = 2;
-          life = 100;
-          document.querySelector('#life').innerHTML = 'Life : ' + life;
-          score = 0;
-          s = document.getElementById('score');
-          s.textContent = 'Score : ' + score;
+          // enemySpeed = 2; 個別に設定するようにしたので廃止
 
+
+          life = 100;
+          l.innerHTML = 'Life : ' + life; // l の要素はローカル変数宣言のところで取得済み。
+          
+          score = 0;
+          s.textContent = 'Score : ' + score; // s の要素はローカル変数宣言のところで取得済み。
+          
           level = 1;
-          lvl = document.getElementById('level');
           lvl.textContent = 'level : ' + level;
-          remainingBullets = 12;
-          document.querySelector('#bullets').textContent = '残弾数 : ' + remainingBullets;
+          
+          // 小ネタ
+          //--------------------------------------------------------------------------------------------------- 
+          handgunBullets = 12; //-------------------------------これを10000とかにすると楽しい。リロードすると12なるが。-------
+          //---------------------------------------------------------------------------------------------------
+          hgMagazines = 100;
+          weaponSelector = 0; // 0 ハンドガン
+          setHandGun(); // weapon.js の関数
+          // 主人公(拳銃)、照準(拳銃)の設置、拳銃の弾数、マガジン数のテキスト表示
+
+          callTrickA = 0; // 逆さまオバケ出現管理用
+
+          setBgimg(); // mouseMove.js の関数 背景設置
 
           firstE = 0;
-          lastE = 3;
+          lastE = 2;
           setEnemies();// mouseMove.js の関数
-          // 配列０番～２番の敵を500x500フレーム内に呼び出して拡大モードにし、他は待機させておく関数
+          // 配列０番～１番の敵を500x500フレーム内に呼び出して拡大モードにし、他は待機させておく関数
           enemySizeup(); // function.js の関数。敵機拡大開始
-
-          setTarget();// mouseMove.js の関数。照準設置
-
-          document.querySelector('#result').innerHTML = '';
+          document.querySelector('#result').textContent = '';
           document.querySelector('.game__start').style.display = 'none';
-          document.querySelector('#cockpit_01').style.display = 'block';
-          document.querySelector('#bgimg0').style.display = 'block';
-          document.querySelector('#score').style.display = 'block';
-          document.querySelector('#level').style.display = 'block';
-          document.querySelector('#life').style.display = 'block';
-          document.querySelector('#bullets').style.display = 'block';
-          document.querySelector('#targetScope0').style.display = 'block';
+          bgimg.style.display = 'block'; // 要素は setBgimg(); で取得済み。 setBgimg();がこの行より上にあればいい。
+          s.style.display = 'block'; // 要素はローカルで取得済み
+          lvl.style.display = 'block'; // 要素はローカルで取得済み
+          l.style.display = 'block'; // 要素はローカルで取得済み
+          Bullets.style.display = 'block'; // 要素は global.js で取得済み
+          BulletStock.style.display = 'block'; // 要素は global.js で取得済み
+          target.style.display = 'block'; // 関数setTarget();がこの行より上にあれば、 target. の要素は取得されている。
+          Player.style.display = 'block'; // 関数setPlayer();がこの行より上にあれば、 Player. の要素は取得されている。
           document.querySelector('.game__wrapper').style.display = 'block';
           document.querySelector('.game__over').style.display = 'none';
           playBgm1(); // audio.js の関数呼び出し
-          zombieVoive(); // sudio.js の関数呼び出し
+          soundZombieVoive1(); // audio.js の関数呼び出し
 
           //初期化も合わせて処理しています
+
           break;
 
         case '1':
@@ -176,6 +203,18 @@ document.addEventListener('DOMContentLoaded',
 
         case '0':
           funcFreeC(); // freeSpaceC のテスト関数呼び出し
+          break;
+
+        case 'Escape':
+          answer_esc(); // 逆さまオバケ撃退チェック
+          break;
+
+        case 'Insert':
+          answer_Ins(); // 逆さまオバケ撃退チェック
+          break;
+
+        case 'v':
+          answer_v(); // 逆さまオバケ撃退チェック
           break;
 
       } // switch文の閉じ

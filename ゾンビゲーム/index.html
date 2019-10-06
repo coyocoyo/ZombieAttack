@@ -14,43 +14,50 @@
 
   <!-- 音源 -->
 
-  <!-- サンプル 自機の弾の発射音 -->
-  <audio preload="auto" id="soundShoot01">
+  <!-- サンプル 拳銃の発射音 -->
+  <audio preload="auto" id="soundHandGun01">
     <source src="./audio_files/gun shot.mp3"></audio>
-  <audio preload="auto" id="soundShoot02">
+  <audio preload="auto" id="soundHandGun02">
     <source src="./audio_files/gun shot.mp3"></audio>
 
+
+  <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+  <!-- ショットガンの発射音 現在、拳銃の音を使用中 -->
+  <audio preload="auto" id="soundShotGun">
+    <source src="./audio_files/gun shot.mp3"></audio>    
+　　<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
+
   <!--  自機からの攻撃が当たった時の音。撃墜したとは限らない。  -->
-  <audio preload="auto" id="soundHit">
+  <audio preload="auto" id="soundHit1">
     <source src="./audio_files/sample_hit.mp3"></audio>
 
   <!-- サンプル 敵機を撃墜した時の音。爆発音。-->
-  <audio preload="auto" id="soundDestroy"></audio>
+  <audio preload="auto" id="soundDestroy1"></audio>
   <source src="./audio_files/blood.mp3"></audio>
 
   <!-- サンプル 自機がダメージを受けた時の音 -->
-  <audio preload="auto" id="soundDamaged">
+  <audio preload="auto" id="soundDamaged1">
     <source src="./audio_files/sample_damaged.mp3"></audio>
 
   <!--  敵が出てきた時のゾンビの声  -->
-  <audio preload="auto" id="soundZombieVoice">
+  <audio preload="auto" id="soundZombieVoice1">
     <source src="./audio_files/zombie-voice1.mp3"></audio>
 
   <!--  残弾数0の音  -->
-  <audio preload="auto" id="noBullet">
+  <audio preload="auto" id="noBullet1">
     <source src="./audio_files/noBullet.mp3"></audio>
 
   <!--  reload音  -->
-  <audio preload="auto" id="reload">
+  <audio preload="auto" id="reload1">
     <source src="audio_files/gun-reload1.mp3"></audio>
 
-
   <!--game play bgm-->
-  <audio preload="auto" id="bgm1" loop>
+  <audio preload="auto" id="Bgm1" loop>
     <source src="audio_files/n30.mp3" preload="auto"> </audio>
 
   <!--game over bgm-->
-  <audio preload="auto" id="bgm2" loop>
+  <audio preload="auto" id="Bgm2" loop>
     <source src="audio_files/game over music.mp3" preload="auto"> </audio>
 
 
@@ -64,23 +71,39 @@
     <div class="operation"><img src="img/game-operation.jpg"></div>
     <div class="game__inner">
 
+      <img src="img/man.png" alt="" id="Player_0"><!-- 主人公(拳銃) -->
 
-      <img src="img/man.png" alt="" id="cockpit_01">
+      <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+      <img src="img/man.png" alt="" id="Player_1"><!-- 主人公(ショットガン)の画像をお願いします。 -->
+      <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
       <img src="img/back-ground-01.jpg" alt="" id="bgimg0">
-      <img src="img/sampleTarget.png" alt="" id="targetScope0"><!-- サンプルです。正方形なら大きさ自由 -->
+      <img src="img/sampleTarget0.png" alt="" id="targetScope0"><!-- 拳銃用サンプルです。正方形なら大きさ自由 -->
+      <img src="img/sampleTarget1.png" alt="" id="targetScope1"><!-- ショットガン用サンプルです。正方形なら大きさ自由 -->
 
-      <img src="img/zombie.png" alt="" id="enemyA0"><!-- 画像は正方形である必要はないです。 -->
+      <img src="img/zombie.png" alt="" id="enemyA0"><!-- 敵の画像は正方形である必要はないです。 -->
       <img src="img/zombie.png" alt="" id="enemyA1"><!-- 大きさも自由。当たり判定のため、上下左右の余白は少ないほうがいいです。 -->
       <img src="img/deadman2.png" alt="" id="enemyA2"><!-- 攻撃力、耐久力を個別に設定するので、UFOも隕石も同じA。 -->
       <img src="img/goast.png" alt="" id="enemyA3">
       <img src="img/goast.png" alt="" id="enemyA4">
       <img src="img/piero.png" alt="" id="enemyA5">
-      <img src="img/deadman1.png" alt="" id="enemyA6">
-      <img src="img/piero.png" alt="" id="enemyA7">
-      <img src="img/deadman1.png" alt="" id="enemyA8">
-      <img src="img/deadman3.png" alt="" id="enemyA9"><!-- 今のところ、10種類まで設定可能 -->
+      <img src="img/piero.png" alt="" id="enemyA6">
+      <img src="img/deadman1.png" alt="" id="enemyA7">
+      <img src="img/goast.png" alt="" id="enemyA8">
+      <img src="img/goast.png" alt="" id="enemyA9"><!-- 今のところ、10種類まで設定可能 -->
 
-      <img src="img/sample_Hit.png" alt="" id="Hit">
+      <img src="img/trickA_1.png" alt="" id="trickA_1"><!-- 逆さまに出てくるオバケ１号 -->
+      <img src="img/trickA_2.png" alt="" id="trickA_2"><!-- 逆さまに出てくるオバケ２号　サンプルです。 -->
+      <h1 id='key__esc'>「esc」 を押せ！</h1><!-- 逆さまオバケ撃退用 -->
+      <h1 id='key__Ins'>「Ins」 を押せ！</h1>
+      <h1 id='key__v'>「 v 」 を押せ！</h1>
+
+      <img src="img/alertTop.png" alt="" id="alertTop"><!-- 警告矢印 「上」 --> 
+      <img src="img/alertLeft.png" alt="" id="alertLeft"><!-- 警告矢印 「左」 -->
+      <img src="img/alertRight.png" alt="" id="alertRight"><!-- 警告矢印 「右」 -->
+      <img src="img/alertBottom.png" alt="" id="alertBottom"><!-- 警告矢印 「下」 -->
+
+      <img src="img/sample_Hit.png" alt="" id="Hit0">
 
       <img src="img/blood-ef.png" alt="" id="explosion">
 
@@ -94,7 +117,8 @@
         <li id="score" class="game__item">Score：0点</li>
         <li id="level" class="game__item">Level：1</li>
         <li id="life" class="game__item">Life : 100</li>
-        <li id="bullets" class="game__item">残弾数 : 12</li>
+        <li id="Bullets" class="game__item">残弾数 : 12</li>
+        <li id="BulletStock" class="game__item">マガジン : 100</li>
       </ul>
 
       <!--ゲームスタート画面-->
@@ -147,10 +171,21 @@ UFO、隕石が接近しすぎると自機がダメージを受けます。
   <script src="functions/freeSpaceA.js"></script><!-- 作業・試作用の.jsファイルです。ご自由にお使いください。 -->
   <script src="functions/freeSpaceB.js"></script><!-- 作業・試作用の.jsファイルです。ご自由にお使いください。 -->
   <script src="functions/freeSpaceC.js"></script><!-- 作業・試作用の.jsファイルです。ご自由にお使いください。 -->
-  <script src="functions/functions.js"></script><!-- グローバル変数、敵機の拡大 -->
-  <script src="functions/mouseMove.js"></script><!-- 視点移動、配置、当たり判定。座標に関係するもの -->
-  <script src="functions/keyBoard.js"></script>
-  <script src="functions/audio.js"></script>
+
+  <script src="functions/global.js"></script><!-- グローバル変数の宣言総合。ゲームバランスに係わる変数、.jsファイル間での共用変数の置き場 -->
+  
+  <script src="functions/functions.js"></script><!-- 敵機の拡大、自機の被ダメージ処理 -->
+  
+  <script src="functions/mouseMove.js"></script><!-- 視点移動、配置、射撃の当たり判定、各オブジェクトの配置、撤去。座標に関係するもの -->
+  
+  <script src="functions/weapon.js"></script><!-- 射撃、当たり判定、反動、リロード、武器変更 -->
+
+  <script src="functions/trickA.js"></script><!-- 逆さまオバケ -->
+
+  <script src="functions/keyBoard.js"></script><!-- キーボード操作。みんなの共用スペース。行数の多い処理は他の人にとって見づらくなる可能性あり。 -->
+  <!-- マウスでの視点移動とは別に、矢印キーでの視点移動があると遊びやすくなると思います。 -->
+  
+  <script src="functions/audio.js"></script><!-- 音は挙動が不安定なので、専任の人にお願いすること。 -->
 
 
 </body>
