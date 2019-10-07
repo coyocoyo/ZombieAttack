@@ -56,13 +56,13 @@ document.addEventListener('DOMContentLoaded',
 
       if (recoil < 0) {
         recoil += 2;
-        Player.style.left = recoil + 'px';
-        Player.style.top = -1 * (recoil / 2) + 'px';
+        Player.style.left = ( playerX + recoil ) + 'px';
+        Player.style.top = (playerY - recoil / 2) + 'px';
         setTimeout(recover, 20);
       } else {
         recoil = 0; // global.js で宣言済み
-        Player.style.left = (playerX + recoil) + 'px';
-        Player.style.top = (playerX - recoil / 2) + 'px';
+        Player.style.left = playerX + 'px';
+        Player.style.top = playerY + 'px';
         recovery = 'done'; // global.js で宣言済み
       }
     }
@@ -72,18 +72,17 @@ document.addEventListener('DOMContentLoaded',
       if (handgunBullets > 0) {
         soundHandGun(); // audio.js の関数呼び出し
         handgunBullets -= 1; //残弾数の減少
-        //console.log(remainingBullets);
-        Bullets.textContent = '残弾数 : ' + handgunBullets;
+        Bullets.textContent = '残弾数 : ' + handgunBullets; // 残弾数の画面表示
         hitJudge();// mouseMove.js の関数呼び出し。射撃の当たり判定。
         recoil = -10; // 反動小さめ
-        Player.style.left = (playerX + recoil) + 'px'; // 画面の寸法が変わったときのため、式を書き加える必要あり、１つ書けば他の武器はコピペでok。
-        Player.style.top = (playerX - recoil / 2) + 'px';
+        Player.style.left = (playerX + recoil) + 'px'; // 反動を主人公画像の座標に加算
+        Player.style.top = (playerY - recoil / 2) + 'px'; // 反動を主人公画像の座標に加算
         recovery = 'yet'; // 反動のため、「まだ撃てない」の状態に。 
         recover(); // 反動からの復元処理
 
       } else {
         soundNoBullet1(); // audio.js の関数呼び出し。弾切れ音 カチャッ
-      } //remainBulets ifの閉じ
+      } // ifの閉じ
     } // shoot() の閉じ
 
 
@@ -92,10 +91,9 @@ document.addEventListener('DOMContentLoaded',
       if (shotShell > 0) {
         soundShotGun(); // audio.js の関数呼び出し
         shotShell -= 1; //残弾数の減少
-        //console.log(remainingBullets);
         Bullets.textContent = '装填数 : ' + shotShell;
 
-
+        /*
         hitJudge(); // mouseMove.js の関数呼び出し。射撃の当たり判定。
         hitJudge();
         // ４回呼び出してる。威力は拳銃の４倍。
@@ -105,15 +103,16 @@ document.addEventListener('DOMContentLoaded',
           hitJudge();
           hitJudge();
         }
-        let timer = setTimeout(moreHitJudge, 50);// 時間差で２発処理させてみる。
-
-
-        /* // こういう手もあるかもしれない。エフェクトが４回見えてもいいはずだが。
-        hitJudge(); // １発目
-        let timer2 = setTimeout(hitJudge, 50);
-        let timer3 = setTimeout(hitJudge , 100);
-        let timer4 = setTimeout(hitJudge , 150);
+        let timer = setTimeout(more2HitJudge, 50);// 時間差で２発処理させてみる。
         */
+
+        // こういう手もあるかもしれない。エフェクトが６回見えてもいいはずだが。
+        hitJudge(); // １発目
+        let timer2 = setTimeout(hitJudge, 20);
+        let timer3 = setTimeout(hitJudge , 40);
+        let timer4 = setTimeout(hitJudge , 60);
+        let timer5 = setTimeout(hitJudge , 80);
+        let timer6 = setTimeout(hitJudge , 100); // ６回判定に変更。              
 
 
         recoil = -60; // 反動は大きめ
@@ -124,7 +123,7 @@ document.addEventListener('DOMContentLoaded',
 
       } else {
         soundNoBullet1(); // audio.js の関数呼び出し。弾切れ音 カチャッ
-      } //remainBulets ifの閉じ
+      } // ifの閉じ
     } // shoot() の閉じ
 
 
@@ -135,7 +134,7 @@ document.addEventListener('DOMContentLoaded',
     shoot = () => {
 
       if (level === 0) { // ゲームスタート前なら
-        soundHandGun(); // 音だけ。 
+        soundHandGun(); // 音だけ。 音源のロードが終わっているか試すことがある。
       } else {
         switch (weaponSelector) { // (recoil)反動からの(recovery)回復が完了してるなら射撃へ。
           case 0: if (recovery === 'done') { shootHandGun(); }
@@ -176,16 +175,19 @@ document.addEventListener('DOMContentLoaded',
     /*-- ショットガンは継ぎ足し充填なのでちょっと特殊 --*/
     reloadShotGun = () => {
       let need; // 必要量
-      // shotShellMax はショットガンに装填できる弾の最大値。定数６で設定。at global.js
+      // shotShellMax はショットガンに装填できる弾の最大値。定数６で設定。global.js
       // shotShell はショットガンに装填されてる弾の残り。
       need = shotShellMax - shotShell; // 何発減っていて、満タンまで何発必要か。
-      if (need <= sShellStock) { // 予備のほうが多いならば
+      if ( need < 0 ) { // 装填されてる弾数が最大装填数よりも多いならば、(10000発をやってるとき)
+        shotShell = 6; // 6 発にしろ。
+      } else if (need <= sShellStock) { // (通常モードで)必要量よりも予備のほうが多いならば
         shotShell += need; // 装填して
         sShellStock -= need; // 予備を減らせ。
-      } else { // そうでない(必要量よりも予備のほうが少ないならば)
+      } else if ( need >= sShellStock ) { // 必要量よりも予備のほうが少ないならば
         shotShell += sShellStock; // 予備を全部装填して
         sShellStock = 0; // 予備を０にしろ。
       }
+
       soundReload1(); // audio.js の関数呼び出し
       Bullets.textContent = '装填数 : ' + shotShell;
       BulletStock.textContent = '予備 : ' + sShellStock;
@@ -225,8 +227,16 @@ document.addEventListener('DOMContentLoaded',
       Player_Width = Player0_Width;
       // global.js の変数宣言参照。css の .style.width を pxなしの数値でもらいたいだけ。
       // 主人公画像を画面サイズに関係なく真ん中に配置するために必要。
-      // 0 横幅を格納してからセットする。
+      // 横幅を格納してから主人公画像(拳銃)をセットする。
       setPlayer(0); // mouseMove.js の関数。０番のプレイヤー画像を設置する。
+
+      // 武器の持ち替え時のモーションに見えそうなもの。射撃による反動を使い回し。
+      recoil = -40; // これぐらい？
+      Player.style.left = (playerX + recoil) + 'px';
+      Player.style.top = (playerY - recoil) + 'px';
+      recovery = 'yet'; 
+      recover();
+      
       setTarget(0); // mouseMove.js の関数。０番の照準を設置する。
       Bullets.textContent = '残弾数 : ' + handgunBullets; // テキスト表示
       BulletStock.textContent = 'マガジン : ' + hgMagazines; // テキスト表示
@@ -237,6 +247,14 @@ document.addEventListener('DOMContentLoaded',
       removeTarget(0); // mouseMove.js の関数。０番(拳銃)の照準画像を撤去する。
       Player_Width = Player1_Width;
       setPlayer(1); // mouseMove.js の関数。１番のプレイヤー画像を設置する。
+
+      // 武器の持ち替え時のモーションに見えそうなもの。射撃による反動を使い回し。
+      recoil = -40; // これぐらい？
+      Player.style.left = (playerX + recoil) + 'px';
+      Player.style.top = (playerY - recoil) + 'px';
+      recovery = 'yet'; 
+      recover();
+
       setTarget(1); // mouseMove.js の関数。１番の照準を設置する。
       Bullets.textContent = '装填数 : ' + shotShell; // テキスト表示
       BulletStock.textContent = '予備 : ' + sShellStock; // テキスト表示
@@ -244,7 +262,7 @@ document.addEventListener('DOMContentLoaded',
 
 
 
-
+    /*-- 処理の振り分け --*/
     changeWeapon = () => {
 
       switch (weaponSelector) {

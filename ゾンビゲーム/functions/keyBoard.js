@@ -14,7 +14,7 @@
 
 キー 「 c 」 : 武器変更
 
-キー 「 Enter 」 : 敵機の拡大開始。 ゲームスタートに近い。
+キー 「 Enter 」 : ゲームを１からスタート。ゲーム中でも機能する。
 
 画面や敵機が流れる速さ係数
 キー 「 1 」 : 0.2 遅い
@@ -26,10 +26,22 @@
 キー 「 0 」 : 使わなくなった。
 
 キー 「 x 」
-画面上のマウスカーソルの可視・不可視切り替え。役に立ってない。
+ノーマルゲーム中のヤケクソキー。
+拳銃の弾:10000発 (1発撃つと弾数が表示される。)
+ショットガンの弾:10000発 (1発撃つと弾数が表示される。)
+リロードすると12発・６発になる。
 
 キー 「 z 」
-背景・敵機・命中エフェクト・爆発エフェクトのマウス追従をストップする
+背景・敵機・命中エフェクト・爆発エフェクトのマウス追従をストップする。
+
+キー 「 p 」
+敵の拡大を一時停止。ポーズボタンに近い。
+もう一度押せば拡大再開。
+
+キー 「 esc 」
+キー 「 L 」
+キー 「 v 」
+逆さまオバケ撃退用
 
 */
 
@@ -51,9 +63,7 @@ document.addEventListener('DOMContentLoaded',
   function () {
     'use strict';
 
-    /*-------------------------------------
-                 キーダウンイベント
-    --------------------------------------*/
+
     let z_key = 'movable';
     // zキーイベント用関数
     // zキーを押しながらだとスクロールが全部止まる
@@ -61,17 +71,22 @@ document.addEventListener('DOMContentLoaded',
 
     let num; // キーダウン、キーアップイベントで使ってる
 
-    let mouseCursor = 'auto';
-    // マウスカーソルの可視・不可視切り替え用。'none' か 'auto'かの文字列を格納。初期値:auto
-
-    let l; // 画面上の Life 表示要素格納用
+    let l; // 画面上の Life テキスト表示要素格納用
     l = document.querySelector('#life'); // 格納しとく
 
-    let s; // 画面上の Score 表示要素格納用
+    let s; // 画面上の Score テキスト表示要素格納用
     s = document.querySelector('#score'); // 格納しとく
 
-    let lvl; // 画面上の Level 表示要素格納用
+    let lvl; // 画面上の Level テキスト表示要素格納用
     lvl = document.querySelector('#level'); // 格納しとく
+
+
+
+
+
+    /*-------------------------------------
+                 キーダウンイベント
+    --------------------------------------*/
 
     document.addEventListener('keydown', function (e) {
 
@@ -87,6 +102,7 @@ document.addEventListener('DOMContentLoaded',
           break;
 
         case 'd': // 開発用チートキー
+          //trickA_1_Down(); // 逆さまオバケ１登場
           trickA_2_Down(); // 逆さまオバケ２登場
           break;
 
@@ -98,7 +114,7 @@ document.addEventListener('DOMContentLoaded',
           a2Up(); // 逆さまオバケ２を上に撃退
           break;
 
-        case ' ': // 空白キー
+        case ' ': // 空白キー(スペースキー)
           shoot(); // mouseMove.js の関数呼び出し
           break;
 
@@ -107,14 +123,9 @@ document.addEventListener('DOMContentLoaded',
           changeWeapon(); // weapon.js の関数呼び出し
           break;
 
-        case 'x':
-          if (mouseCursor === 'auto') {
-            document.body.style.cursor = 'none';
-            mouseCursor = 'none';
-          } else {
-            document.body.style.cursor = 'auto';
-            mouseCursor = 'auto';
-          }
+        case 'x': // ゲーム中のヤケクソキー。リロードすると12発・６発になる。
+          handgunBullets = 10000; //1発撃つと弾数が表示される。
+          shotShell = 10000; // 1発撃つと弾数が表示される。
           break;
 
         case 'z':
@@ -126,14 +137,21 @@ document.addEventListener('DOMContentLoaded',
           }
           break;
 
-        case 'r':
+        case 'p':
 
+          // functions.js の関数enemySizeup() の一時停止
+          if ( enemySizeupStopper === 1 ) {
+            enemySizeupStopper = 0;
+          } else {
+            enemySizeupStopper = 1;
+          }
+          break;  
+
+        case 'r':
           reload();
           break;
 
         case 'Enter':
-          // enemySpeed = 2; 個別に設定するようにしたので廃止
-
 
           life = 100;
           l.innerHTML = 'Life : ' + life; // l の要素はローカル変数宣言のところで取得済み。
@@ -144,16 +162,20 @@ document.addEventListener('DOMContentLoaded',
           level = 1;
           lvl.textContent = 'level : ' + level;
 
-          // 小ネタ
-          //--------------------------------------------------------------------------------------------------- 
-          handgunBullets = 12; //-------------------------------これを10000とかにすると楽しい。リロードすると12なるが。-------
-          //---------------------------------------------------------------------------------------------------
+          handgunBullets = 12;
           hgMagazines = 100;
-          weaponSelector = 0; // 0 ハンドガン
+
+          shotShell = 6; // ショットガンの弾
+          sShellStock = 30; // ショットガンの予備弾
+
+          weaponSelector = 0; // 0 = 拳銃
           setHandGun(); // weapon.js の関数
           // 主人公(拳銃)、照準(拳銃)の設置、拳銃の弾数、マガジン数のテキスト表示
 
-          callTrickA = 0; // 逆さまオバケ出現管理用
+          //---------------------------------------------------------------------------------------------------
+          callTrickA = 0; // 逆さまオバケ出現管理用----------------- 0 ～ 10 あたりとは関係のない値にすると「出現なし」にできる。
+          //------------------------------------------------------------------------------------ 100 とか x とか。
+          //---------------------------------------------------------------------------------------------------
 
           setBgimg(); // mouseMove.js の関数 背景設置
 

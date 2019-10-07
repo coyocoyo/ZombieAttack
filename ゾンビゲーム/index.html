@@ -25,7 +25,6 @@
   <!-- ショットガンの発射音 現在、拳銃の音を使用中 -->
   <audio preload="auto" id="soundShotGun">
     <source src="./audio_files/gun shot.mp3"></audio>
-  　　
   <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
 
@@ -69,8 +68,9 @@
 
   <div class="game__wrapper">
 
-    <div class="operation"><img src="img/game-operation.jpg"></div>
+
     <div class="game__inner">
+
 
       <img src="img/man.png" alt="" id="Player_0"><!-- 主人公(拳銃) -->
 
@@ -96,7 +96,7 @@
       <img src="img/trickA_1.png" alt="" id="trickA_1"><!-- 逆さまに出てくるオバケ１号 -->
       <img src="img/trickA_2.png" alt="" id="trickA_2"><!-- 逆さまに出てくるオバケ２号　サンプルです。 -->
       <h1 id='key__esc'>「esc」 を押せ！</h1><!-- 逆さまオバケ撃退用 -->
-      <h1 id='key__Ins'>「 L 」 を押せ！</h1>
+      <h1 id='key__l'>「 L 」 を押せ！</h1>
       <h1 id='key__v'>「 v 」 を押せ！</h1>
 
       <img src="img/alertTop.png" alt="" id="alertTop"><!-- 警告矢印 「上」 -->
@@ -140,8 +140,12 @@
 
       </div>
 
-    </div>
-  </div>
+
+    </div><!-- game__inner の閉じ -->
+
+        <div class="operation"><img src="img/game-operation.jpg"></div>
+
+  </div><!-- game__wrapper の閉じ -->
 
 
 

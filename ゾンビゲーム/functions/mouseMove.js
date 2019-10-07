@@ -55,8 +55,7 @@ document.addEventListener('DOMContentLoaded',
     // setTarget()の記述を増やせば武器の変更、照準画像、範囲の切り替えは難しくない。
     // setTarget()は照準画像の寸法に合わせて自動的に真ん中やや上の座標に設置される。
 
-    let playerX;　// 主人公画像の x 座標 
-    let playerY; // 主人公画像の y 座標
+
 
 
     //let enemyAX = []; // Aタイプの敵機の各x座標
@@ -191,8 +190,8 @@ document.addEventListener('DOMContentLoaded',
       enemyA[i].style.width = enemySizeA[i] + 'px';
       enemyA[i].style.height = enemySizeA[i]/(enemyA[i].naturalWidth/enemyA[i].naturalHeight) + 'px';
       // 画像縮小
-      enemyA[i].style.left = 1 + 'px';
-      enemyA[i].style.top = 1 + 'px';
+      enemyA[i].style.left = 110 + 'px';
+      enemyA[i].style.top = 10 + 'px';
       enemyA[i].style.display = 'none';
     }
 
@@ -286,8 +285,8 @@ document.addEventListener('DOMContentLoaded',
       // ゲームスタート時に必ず実行される処理。
       // ここで要素が取得される。
 
-      targetX = (frameWidth / 2) - (target.width / 2) + 20;
-      targetY = (frameHeight / 2) - (target.height / 2) - addY + 20;
+      targetX = (frameWidth / 2) - (target.width / 2) + addX;
+      targetY = (frameHeight / 2) - (target.height / 2) - addY;
 
       target.style.left = targetX + 'px';
       target.style.top = targetY + 'px';
@@ -302,7 +301,7 @@ document.addEventListener('DOMContentLoaded',
       Player = document.querySelector('#Player_' + i); // i 番の主人公の画像の要素を取得。
 
       playerX = (frameWidth / 2) - (Player_Width / 2); // Player_Width → global.js の変数宣言参照。 
-      playerY = (frameHeight) - (frameWidth*(Player.naturalWidth/Player.naturalHeight));
+      playerY = (frameHeight) - (Player_Width*(Player.naturalWidth/Player.naturalHeight));
 
       Player.style.left = playerX + 'px';
       Player.style.top = playerY + 'px';

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded',
   function () {
     'use strict';
 
-    let timer2; // 敵機の拡大処理、自機の被ダメージ判定で使用
+    let enemySizeupTimer; // 敵機の拡大処理で使用
 
     let lvl; // 画面上の Score 表示要素格納
     lvl = document.querySelector('#level'); // 格納しとく
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded',
         // 拡大処理
         if (enemySizeA[i] < 200) {
         //if (enemySizeA[i] < eSizeMax[i]) { // ネタ +++++++++++++++++++++++++++++++++++++++++++++++
-          enemySizeA[i] += eSpeed[i];
+          enemySizeA[i] += eSpeed[i]*enemySizeupStopper;
           //console.log(enemySize[i]); //
           enemyA[i].style.width = enemySizeA[i] + "px";
           enemyA[i].style.height = enemySizeA[i]/(enemyA[i].naturalWidth/enemyA[i].naturalHeight) + "px";
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded',
 
           setTimeout(damageNone, 3000);
 
-
+          // 被ダメージモーション
           recoil = -100; // 反動は大きく
           Player.style.left = recoil + 'px';
           Player.style.top = -1*(recoil/2) + 'px';  // 10px反動。元の座標が left:0 なので。
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded',
         
       } // for文の閉じ
 
-      if (life < 0){ // ゲームオーバー処理 100ミリ秒毎にチェックされてる。
+      if (life < 0){ // ゲームオーバー処理 200ミリ秒毎にチェックされてる。
         //document.querySelector('.game__wrapper').style.display = 'none';
         document.querySelector('.game__over').style.display = 'block';
         document.querySelector('#score').style.display = 'none';
@@ -177,91 +177,68 @@ document.addEventListener('DOMContentLoaded',
   --------------------------------------------------------------------------------------*/
 
       /*---- スコアによる敵機の再配置 ----*/
-      // 100ミリ秒毎にチェックされてる。
+      // 200ミリ秒毎にチェックされてる。
       if (score >= 1000 && level === 1) {
-        //clearTimeout(timer2);
-        //clearInterval(timer2);
+        clearTimeout(enemySizeupTimer);
         // これがないと、敵の種類を変えるごとに拡大が加速する。
         level = 2;
         lvl.textContent = 'level : ' + level;
-        // enemySpeed = 1;
         firstE = 1;
         lastE = 4;
         setEnemies(); // mouseMove.js の関数(first と last で指定された範囲の敵機をフレーム内に配置する。)
         enemySizeup(); // 拡大開始
       } else if (score >= 2000 && level === 2) {
-        clearTimeout(timer2);
-        //clearInterval(timer2);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        clearTimeout(enemySizeupTimer);
         level = 3;
         lvl.textContent = 'level : ' + level;
-        //enemySpeed = 2;
         firstE = 2;
         lastE = 5;
         setEnemies(); //  mouseMove.js の関数
         enemySizeup(); // 拡大開始
       } else if (score >= 3000 && level === 3) {
-        clearTimeout(timer2);
-        //clearInterval(timer2);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        clearTimeout(enemySizeupTimer);
         level = 4;
         lvl.textContent = 'level : ' + level;
-        //enemySpeed = 2;
         firstE = 4;
         lastE = 7;
         setEnemies(); //  mouseMove.js の関数
         enemySizeup(); // 拡大開始
       } else if (score >= 4000 && level === 4) {
-        clearTimeout(timer2);
-        //clearInterval(timer2);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        clearTimeout(enemySizeupTimer);
         level = 5;
         lvl.textContent = 'level : ' + level;
-        //enemySpeed = 6;
         firstE = 5;
         lastE = 8;
         setEnemies(); // mouseMove.js の関数
         enemySizeup(); // 拡大開始
       } else if (score >= 5000 && level === 5) {
-        clearTimeout(timer2);
-        //clearInterval(timer2);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        clearTimeout(enemySizeupTimer);
         level = 6;
         lvl.textContent = 'level : ' + level;
-        //enemySpeed = 6;
         firstE = 6;
         lastE = 9;
         setEnemies(); // mouseMove.js の関数
         enemySizeup(); // 拡大開始
       } else if (score >= 6000 && level === 6) {
-        clearTimeout(timer2);
-        //clearInterval(timer2);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        clearTimeout(enemySizeupTimer);
         level = 7;
         lvl.textContent = 'level : ' + level;
-        //enemySpeed = 6;
         firstE = 6;
         lastE = 10;
         setEnemies(); // mouseMove.js の関数
         enemySizeup(); // 拡大開始
       } else if (score >= 7000 && level === 7) {
-        clearTimeout(timer2);
-        //clearInterval(timer2);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        clearTimeout(enemySizeupTimer);
         level = 8;
         lvl.textContent = 'level : ' + level;
-        //enemySpeed = 6;
         firstE = 5;
         lastE = 10;
         setEnemies(); // mouseMove.js の関数
         enemySizeup(); // 拡大開始
       } else if (score >= 8000 && level === 8) {
-        clearTimeout(timer2);
-        //clearInterval(timer2);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        clearTimeout(enemySizeupTimer);
         level = 9;
         lvl.textContent = 'level : ' + level;
-        //enemySpeed = 6;
         firstE = 0;
         lastE = 7;
         setEnemies(); // mouseMove.js の関数
@@ -283,11 +260,7 @@ document.addEventListener('DOMContentLoaded',
 
       // 拡大でサイズが最大になってる敵を"特定"したい。値が欲しいわけではない。
       // 場外の敵は一律 10px になるようにした。
-
-
-
-
-      
+ 
       largestEnemy  = Math.max(
         enemySizeA[0],
         enemySizeA[1],
@@ -411,7 +384,7 @@ document.addEventListener('DOMContentLoaded',
 
 
 
-      timer2 = setTimeout(enemySizeup, 200);
+      enemySizeupTimer = setTimeout(enemySizeup, 200);
       // console.log('関数enemySizeupが呼び出されました');
       // setInterval なら繰り返し処理なので、処理の閉じカッコ 「 } 」 の後に配置するべき。
       // setTimeout は１回きりなので、全部の処理が終わる直前に入れるとループになる。

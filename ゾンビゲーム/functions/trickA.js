@@ -11,7 +11,7 @@
 
 let trickA_1_Down; // 逆さまオバケの画像を下に下げてくる関数。 チートキー「」
 let trickA_2_Down; // コピー生産。 チートキー「 d 」
-let a1Up; // 逆さまオバケの画像を上に上げる関数。 チートキー「」
+let a1Up; // 逆さまオバケの画像を上に上げる関数。 チートキー「u」
 let a2Up; // コピー生産。 チートキー「 u 」
 
 let answer_esc; // 逆さまオバケ撃退チェック関数
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded',
     //trickA_1Img.style.left = 数値 + 'px';
     //trickA_1Img.style.top = 数値 + 'px';
     //の形で座標を動かせる。
-    // 座標は、ページロード時は値を得られないが、座標を動かすと値を得られる模様。
+    // 座標は、ページロード時(.style.display = 'none'時？)は値を得られないが、座標を動かすと値を得られる模様。
 
     const trickA_1_width = 400; // 逆さまオバケ trickA_1 をどれくらいの大きさで表示させるか。横幅基準で。
     const trickA_1_height = trickA_1_width * (trickA_1Img.naturalWidth / trickA_1Img.naturalHeight);// その場合の縦幅を計算。
@@ -104,15 +104,17 @@ document.addEventListener('DOMContentLoaded',
       // A1Yはローカル変数宣言で宣言＋代入。timerも変数宣言で宣言
       a1Down = () => {
 
-        A1Y += 30; // どれくらいの速さで画像を下ろすか。
+        A1Y += 50; // どれくらいの速さで画像を下ろすか。
 
         trickA_1Img.style.top = A1Y + 'px';
         timer = setTimeout(a1Down, 20);
 
-        if (A1Y >= -10) { // 限界値以上だったら
-          A1Y = -10; // 限界値を代入しとけ、の意
+        if (A1Y >= 0) { // 限界値以上だったら
+          A1Y = 0; // 限界値を代入しとけ、の意
           clearTimeout(timer);
+          trickA_1Img.style.top = A1Y + 'px';
         } // if文の閉じ
+        // 画面上部の10pxぐらいののすき間が謎。
 
       } // a1Down の閉じ
       a1Down();
@@ -157,13 +159,14 @@ document.addEventListener('DOMContentLoaded',
       // A1Yはローカル変数宣言で宣言＋代入。timerも変数宣言で宣言
       a2Down = () => {
 
-        A2Y += 30; // どれくらいの速さで画像を下ろすか。
+        A2Y += 50; // どれくらいの速さで画像を下ろすか。
 
         trickA_2Img.style.top = A2Y + 'px';
         timer = setTimeout(a2Down, 20);
 
-        if (A2Y >= -10) { // 限界値以上だったら
-          A2Y = -10; // 限界値を代入しとけ、の意
+        if (A2Y >= 0) { // 限界値以上だったら
+          A2Y = 0; // 限界値を代入しとけ、の意
+          trickA_2Img.style.top = A2Y + 'px';
           clearTimeout(timer);
         } // if文の閉じ
 
@@ -213,7 +216,7 @@ document.addEventListener('DOMContentLoaded',
       timer = setTimeout(a1Up, 20);
 
       // 上がりきったら停止
-      if (A1Y <= -1 * (trickA_1Img.height)) { // 限界値以上だったら
+      if (A1Y <= -1 * (trickA_1Img.height)) { // 限界値を超えたら
         A1Y = -1 * (trickA_1Img.height); // 限界値を代入しとけ、の意
         clearTimeout(timer);
       } // if文の閉じ
@@ -228,7 +231,7 @@ document.addEventListener('DOMContentLoaded',
       timer = setTimeout(a2Up, 20);
 
       // 上がりきったら停止
-      if (A2Y <= -1 * (trickA_2Img.height)) { // 限界値以上だったら
+      if (A2Y <= -1 * (trickA_2Img.height)) { // 限界値を超えたら
         A2Y = -1 * (trickA_2Img.height); // 限界値を代入しとけ、の意
         clearTimeout(timer);
       } // if文の閉じ
@@ -242,7 +245,7 @@ document.addEventListener('DOMContentLoaded',
         a1Up(); // 画像を上へ。元々上にいるなら動かない。
         a2Up(); // 画像を上へ。元々上にいるなら動かない。
 
-        // 効果音、撃退エフェクト(パンチとか)の'block','none'処理はこのへん。
+        // 効果音、撃退エフェクト(パンチアイコンとか)の'block','none'処理はこのへん。
 
         text_esc.style.display = 'none'; // テキストを消す。
       }
@@ -253,7 +256,7 @@ document.addEventListener('DOMContentLoaded',
         a1Up(); // 画像を上へ。元々上にいるなら動かない。
         a2Up(); // 画像を上へ。元々上にいるなら動かない。
 
-        // 効果音、撃退エフェクト(パンチとか)の'block','none'処理はこのへん。
+        // 効果音、撃退エフェクト(パンチアイコンとか)の'block','none'処理はこのへん。
 
         text_l.style.display = 'none'; // テキストを消す。
       }
@@ -264,7 +267,7 @@ document.addEventListener('DOMContentLoaded',
         a1Up(); // 画像を上へ。元々上にいるなら動かない。
         a2Up(); // 画像を上へ。元々上にいるなら動かない。
 
-        // 効果音、撃退エフェクト(パンチとか)の'block','none'処理はこのへん。
+        // 効果音、撃退エフェクト(パンチアイコンとか)の'block','none'処理はこのへん。
 
         text_v.style.display = 'none'; // テキストを消す。
       }
@@ -276,8 +279,8 @@ document.addEventListener('DOMContentLoaded',
     /*--------------------------------------------
         ５号 「 画像のサイズ、縦横比に自由度を持たせる。 」
     ---------------------------------------------*/
-    // 逆さまオバケの画像変更、違うオバケも逆さまで登場させることも予測して
-    // どんな大きさ、縦横比の画像でも自動的に対応するように
+    // 500x500フレーム、逆さまオバケの画像変更、違うオバケも逆さまで登場させることも予測して
+    // どんな大きさ、縦横比の画像でも自動的に調整するようにしたい。
     // 変数の式の形で表現し直す。
     // さて、どこから手を付けるか。
 
@@ -355,6 +358,11 @@ document.addEventListener('DOMContentLoaded',
     // 点数での敵の出現レベルと似た仕組みにする。
     // functions.js に書き込み
     // 機能してる。出現間隔をひろめに調整。
+
+
+    /*----------------------------
+              試作ここまで
+    ----------------------------*/
 
 
 
