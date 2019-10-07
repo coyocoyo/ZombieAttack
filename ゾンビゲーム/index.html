@@ -24,8 +24,9 @@
   <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
   <!-- ショットガンの発射音 現在、拳銃の音を使用中 -->
   <audio preload="auto" id="soundShotGun">
-    <source src="./audio_files/gun shot.mp3"></audio>    
-　　<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+    <source src="./audio_files/gun shot.mp3"></audio>
+  　　
+  <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
 
   <!--  自機からの攻撃が当たった時の音。撃墜したとは限らない。  -->
@@ -95,10 +96,10 @@
       <img src="img/trickA_1.png" alt="" id="trickA_1"><!-- 逆さまに出てくるオバケ１号 -->
       <img src="img/trickA_2.png" alt="" id="trickA_2"><!-- 逆さまに出てくるオバケ２号　サンプルです。 -->
       <h1 id='key__esc'>「esc」 を押せ！</h1><!-- 逆さまオバケ撃退用 -->
-      <h1 id='key__Ins'>「Ins」 を押せ！</h1>
+      <h1 id='key__Ins'>「l」 を押せ！</h1>
       <h1 id='key__v'>「 v 」 を押せ！</h1>
 
-      <img src="img/alertTop.png" alt="" id="alertTop"><!-- 警告矢印 「上」 --> 
+      <img src="img/alertTop.png" alt="" id="alertTop"><!-- 警告矢印 「上」 -->
       <img src="img/alertLeft.png" alt="" id="alertLeft"><!-- 警告矢印 「左」 -->
       <img src="img/alertRight.png" alt="" id="alertRight"><!-- 警告矢印 「右」 -->
       <img src="img/alertBottom.png" alt="" id="alertBottom"><!-- 警告矢印 「下」 -->
@@ -173,18 +174,18 @@ UFO、隕石が接近しすぎると自機がダメージを受けます。
   <script src="functions/freeSpaceC.js"></script><!-- 作業・試作用の.jsファイルです。ご自由にお使いください。 -->
 
   <script src="functions/global.js"></script><!-- グローバル変数の宣言総合。ゲームバランスに係わる変数、.jsファイル間での共用変数の置き場 -->
-  
+
   <script src="functions/functions.js"></script><!-- 敵機の拡大、自機の被ダメージ処理 -->
-  
+
   <script src="functions/mouseMove.js"></script><!-- 視点移動、配置、射撃の当たり判定、各オブジェクトの配置、撤去。座標に関係するもの -->
-  
+
   <script src="functions/weapon.js"></script><!-- 射撃、当たり判定、反動、リロード、武器変更 -->
 
   <script src="functions/trickA.js"></script><!-- 逆さまオバケ -->
 
   <script src="functions/keyBoard.js"></script><!-- キーボード操作。みんなの共用スペース。行数の多い処理は他の人にとって見づらくなる可能性あり。 -->
   <!-- マウスでの視点移動とは別に、矢印キーでの視点移動があると遊びやすくなると思います。 -->
-  
+
   <script src="functions/audio.js"></script><!-- 音は挙動が不安定なので、専任の人にお願いすること。 -->
 
 

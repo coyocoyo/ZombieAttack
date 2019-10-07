@@ -88,15 +88,15 @@ document.addEventListener('DOMContentLoaded',
 
         case 'd': // 開発用チートキー
           trickA_2_Down(); // 逆さまオバケ２登場
-          break;       
+          break;
 
         case 'u': // 開発用チートキー
           text_esc.style.display = 'none';
-          text_Ins.style.display = 'none';
+          text_l.style.display = 'none';
           text_v.style.display = 'none';
           a1Up(); // 逆さまオバケ１を上に撃退
           a2Up(); // 逆さまオバケ２を上に撃退
-          break;     
+          break;
 
         case ' ': // 空白キー
           shoot(); // mouseMove.js の関数呼び出し
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded',
 
         case 'c':
           changeWeapon(); // weapon.js の関数呼び出し
-          break;  
+          break;
 
         case 'x':
           if (mouseCursor === 'auto') {
@@ -137,13 +137,13 @@ document.addEventListener('DOMContentLoaded',
 
           life = 100;
           l.innerHTML = 'Life : ' + life; // l の要素はローカル変数宣言のところで取得済み。
-          
+
           score = 0;
           s.textContent = 'Score : ' + score; // s の要素はローカル変数宣言のところで取得済み。
-          
+
           level = 1;
           lvl.textContent = 'level : ' + level;
-          
+
           // 小ネタ
           //--------------------------------------------------------------------------------------------------- 
           handgunBullets = 12; //-------------------------------これを10000とかにすると楽しい。リロードすると12なるが。-------
@@ -209,8 +209,8 @@ document.addEventListener('DOMContentLoaded',
           answer_esc(); // 逆さまオバケ撃退チェック
           break;
 
-        case 'Insert':
-          answer_Ins(); // 逆さまオバケ撃退チェック
+        case 'l':
+          answer_l(); // 逆さまオバケ撃退チェック
           break;
 
         case 'v':
