@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded',
           esc = false;
           l = true;
           v = false;
-          text_Ins.style.display = 'block'; // テキストを表示させる。
+          text_l.style.display = 'block'; // テキストを表示させる。
           break;
 
         case 3: // 3ってあるんだろうか・・・？この位置に置くと２の処理をする。
