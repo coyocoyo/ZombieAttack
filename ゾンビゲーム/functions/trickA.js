@@ -79,9 +79,7 @@ document.addEventListener('DOMContentLoaded',
     // 逆さまオバケの画像を500x500フレームの上の画面外に配置。
     trickA_2Img.style.top = -1 * (trickA_2Img.height) + 'px';
 
-    let text_esc = document.querySelector('#key__esc'); // 画面表示のテキスト要素を格納
-    let text_l = document.querySelector('#key__Ins'); // 画面表示のテキスト要素を格納
-    let text_v = document.querySelector('#key__v'); // 画面表示のテキスト要素を格納
+
 
     // 答え格納用。３つのうちのどれかが true を持つ。
     let esc;

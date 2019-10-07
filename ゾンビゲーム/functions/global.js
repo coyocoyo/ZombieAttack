@@ -89,69 +89,69 @@ const eSizeMax9 = 200; //(ゴースト)
 */
 
 
-  // for文で使うので配列に入れておく
+// for文で使うので配列に入れておく
 
 let eDefaultLife = [ // 手動で入れるしかないんだろうか。
-eDefaultLife0,
-eDefaultLife1,
-eDefaultLife2,
-eDefaultLife3,
-eDefaultLife4,
-eDefaultLife5,
-eDefaultLife6,
-eDefaultLife7,
-eDefaultLife8,
-eDefaultLife9];
+  eDefaultLife0,
+  eDefaultLife1,
+  eDefaultLife2,
+  eDefaultLife3,
+  eDefaultLife4,
+  eDefaultLife5,
+  eDefaultLife6,
+  eDefaultLife7,
+  eDefaultLife8,
+  eDefaultLife9];
 
 let eSpeed = [
-eSpeed0,
-eSpeed1,
-eSpeed2,
-eSpeed3,
-eSpeed4,
-eSpeed5,
-eSpeed6,
-eSpeed7,
-eSpeed8,
-eSpeed9];
+  eSpeed0,
+  eSpeed1,
+  eSpeed2,
+  eSpeed3,
+  eSpeed4,
+  eSpeed5,
+  eSpeed6,
+  eSpeed7,
+  eSpeed8,
+  eSpeed9];
 
 let eAttack = [
-eAttack0,
-eAttack1,
-eAttack2,
-eAttack3,
-eAttack4,
-eAttack5,
-eAttack6,
-eAttack7,
-eAttack8,
-eAttack9];
+  eAttack0,
+  eAttack1,
+  eAttack2,
+  eAttack3,
+  eAttack4,
+  eAttack5,
+  eAttack6,
+  eAttack7,
+  eAttack8,
+  eAttack9];
 
 let eScore = [
-eScore0,
-eScore1,
-eScore2,
-eScore3,
-eScore4,
-eScore5,
-eScore6,
-eScore7,
-eScore8,
-eScore9];
+  eScore0,
+  eScore1,
+  eScore2,
+  eScore3,
+  eScore4,
+  eScore5,
+  eScore6,
+  eScore7,
+  eScore8,
+  eScore9];
 
 let eSizeMax = [
-eSizeMax0,
-eSizeMax1,
-eSizeMax2,
-eSizeMax3,
-eSizeMax4,
-eSizeMax5,
-eSizeMax6,
-eSizeMax7,
-eSizeMax8,
-eSizeMax9];
+  eSizeMax0,
+  eSizeMax1,
+  eSizeMax2,
+  eSizeMax3,
+  eSizeMax4,
+  eSizeMax5,
+  eSizeMax6,
+  eSizeMax7,
+  eSizeMax8,
+  eSizeMax9];
 
-let enemySizeA = [10,10,10,10,10,10,10,10,10,10];
+let enemySizeA = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 
 
 
@@ -173,11 +173,11 @@ const frameWidth = 500; //px フレームの横の長さ
 // 開発中にフレームの寸法が変わったなら、ここも変更する。
 
 let life = 100;// 自機のHP
-  
+
 
 let Bullets; // 画面表示のテキスト要素格納用
 Bullets = document.querySelector('#Bullets'); // 格納しとく。
-let handgunBullets　= 12; //拳銃の残弾数。初期値１２ 
+let handgunBullets = 12; //拳銃の残弾数。初期値１２ 
 const shotShellMax = 6; // ショットガンの最大装填数。６ぐらい？
 let shotShell = 6; // ショットガンの装填数。初期値６
 
@@ -186,27 +186,27 @@ let BulletStock; // 画面表示のテキスト要素格納用
 BulletStock = document.querySelector('#BulletStock');
 let hgMagazines = 100; // 拳銃のマガジンの残り
 let sShellStock = 30; // ショットガンの予備の弾数
-  
+
 // let enemySpeed = 1;
 // 敵機の拡大の速さ。個別設定も難しくない。
 // 個別設定したので廃止。
 
 let level = 0;
-  // ゲームの段階を示す変数
-  // ページロード直後 ＝ 0、
-  // ゲーム開始直後に 1 、点数が上がると 2,3,4,5 が代入される。
+// ゲームの段階を示す変数
+// ページロード直後 ＝ 0、
+// ゲーム開始直後に 1 、点数が上がると 2,3,4,5 が代入される。
 
 const addY = 70;
-  // 照準は画面中央よりやや高め。
-  // 照準を何ピクセル上にするか調整する変数。
+// 照準は画面中央よりやや高め。
+// 照準を何ピクセル上にするか調整する変数。
 
 let scrollrate = 1;
-  // 背景画像の移動速度係数。かけ算で処理される。
-  // キー操作 「1」 「2」 「3」 でも変更可能
+// 背景画像の移動速度係数。かけ算で処理される。
+// キー操作 「1」 「2」 「3」 でも変更可能
 
 const interval = 20;
-  // マウス移動の計算間隔で使っている。
-  // なんとなく 20 。処理が重いなら遅くする可能性あり。
+// マウス移動の計算間隔で使っている。
+// なんとなく 20 。処理が重いなら遅くする可能性あり。
 
 // 出てくる敵機の種類調整
 let firstE = 0; // 配列の中の何番から何番までの敵を出現させるか、の最初の数。初期値　0
@@ -221,7 +221,7 @@ let score = 0; // 得点
 let enemyAX = []; // Aタイプの敵機の各x座標
 let enemyAY = []; // Aタイプの敵機の各y座標
 let enemyA = [];
-for (let i = 0 ; i < enemyA_Max ; i++){
+for (let i = 0; i < enemyA_Max; i++) {
   enemyA[i] = document.querySelector('#enemyA' + i);
 }
 // ページロード時に格納しておけるか。
@@ -256,18 +256,22 @@ let bgimg;
 // 背景画像の要素格納用
 // mouseMove.js と keyBoard.js が使ってるのでグローバルに。
 
-let callTrickA = 0 ; // 逆さまオバケ出現管理、出現条件に使う。
+let callTrickA = 0; // 逆さまオバケ出現管理、出現条件に使う。
+
+let text_esc = document.querySelector('#key__esc'); // 画面表示のテキスト要素を格納
+let text_l = document.querySelector('#key__Ins'); // 画面表示のテキスト要素を格納
+let text_v = document.querySelector('#key__v'); // 画面表示のテキスト要素を格納
 
 let weaponSelector = 0;
 // 構えてる武器の管理用変数。
 // 0 はハンドガン
 // 1 はショットガンなど
 
-let recoil = 0 ; // 反動の数字を格納する。weapon.js,functions.js が使う。
+let recoil = 0; // 反動の数字を格納する。weapon.js,functions.js が使う。
 let recovery = 'done'; // 射撃の反動から回復しているか否か。weapon.js,functions.js が使う。
 // done = 射撃可能。 yet = 反動から回復中
 
-let aTop,aLeft,aRight,aBottom; // 警告の赤い矢印画像の要素格納
+let aTop, aLeft, aRight, aBottom; // 警告の赤い矢印画像の要素格納
 aTop = document.querySelector('#alertTop');
 aLeft = document.querySelector('#alertLeft');
 aRight = document.querySelector('#alertRight');
@@ -306,8 +310,8 @@ document.addEventListener('DOMContentLoaded',
     //funcFreeA = function(){ // ← この形は通る。
     //funcFreeA = () => {
 
-      //console.log('keyBoard.js から freeSpaceA.js の');
-      //console.log('ローカル関数[ funcFreeA ] が呼び出されました。');
+    //console.log('keyBoard.js から freeSpaceA.js の');
+    //console.log('ローカル関数[ funcFreeA ] が呼び出されました。');
 
     //}
 
