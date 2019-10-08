@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded',
       // A1Yはローカル変数宣言で宣言＋代入。timerも変数宣言で宣言
       a1Down = () => {
 
-        A1Y += 30; // どれくらいの速さで画像を下ろすか。
+        A1Y += 10; // どれくらいの速さで画像を下ろすか。
 
         trickA_1Img.style.top = A1Y + 'px';
         timer = setTimeout(a1Down, 20);
