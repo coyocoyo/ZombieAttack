@@ -12,6 +12,10 @@ body{
   margin-top:50px;
 }
 
+h1 {
+  color:white;
+}
+
 .game__item {
   display: none;
 }
@@ -66,15 +70,16 @@ position: relative;
 }
 
 .game__wrapper{
+  padding:0px;
   height:500px;
-  width:500px;
+  width:700px;
   margin: auto auto;
 }
 
 .game__inner{
-margin-bottom:10px;
+/*margin-bottom:10px;*/
 height:500px;
-width:500px;
+width:700px;
 overflow:hidden;
 position:relative;
 }
@@ -104,6 +109,8 @@ position:relative;
 #enemyA8,
 #enemyA9 {
   position:absolute;
+  top:10px;
+  left:110px;
   z-index:-10;
   width: 10px;
   height: 10px;
@@ -118,7 +125,7 @@ position:relative;
   
   /* width: 400px; */ 
   /* height: 400px; */
-  /* こっちに寸法を書くと、.jsの言うことを聞かなくなる。 */
+  /* こっちに寸法を書くと、.jsの言うことを聞かなくなるような。 */
   /* left:50px; */
   /* top:-400px; */
 }
@@ -130,42 +137,50 @@ position:relative;
 }
 
 #key__esc{ /* 逆さまオバケ撃退用テキスト */
-  font-size: 3rem;
+  font-size: 4rem;
   display: none;
   margin :auto auto; /*-- 記述の意味をよく分かっていない --*/
   position:absolute;
-  left:125px; /*-- この数字がいかにも素人・・・ --*/
+  left:200px; /*-- この数字がいかにも素人・・・ --*/
   top:250px; /*-- この数字がいかにも素人・・・ --*/
   color: red;
   z-index: 12;
 }
 
-#key__Ins{ /* 逆さまオバケ撃退用テキスト */
-  font-size: 3rem;
+#key__l{ /* 逆さまオバケ撃退用テキスト */
+  font-size: 4rem;
   display: none;
   margin :auto auto;
   position:absolute;
-  left:125px;
+  left:200px;
   top:250px;
   color: red;
   z-index: 12;
 }
 
 #key__v{ /* 逆さまオバケ撃退用テキスト */
-  font-size: 3rem;
+  font-size: 4rem;
   display: none;
   margin :auto auto;
   position:absolute;
-  left:125px;
+  left:200px;
   top:250px;
   color: red;
   z-index: 12;
 }
 
 #alertTop,
-#alertLeft,
-#alertRight,
 #alertBottom {
+  display: none;
+  left:100px;
+  top:0;
+  position:absolute;
+  z-index:12;
+  width: 500px;
+  height: 500px;
+}
+
+#alertLeft {
   display: none;
   left:0;
   top:0;
@@ -175,7 +190,15 @@ position:relative;
   height: 500px;
 }
 
-
+#alertRight {
+  display: none;
+  left:200px;
+  top:0;
+  position:absolute;
+  z-index:12;
+  width: 500px;
+  height: 500px;
+}
 
 
 #explosion {
