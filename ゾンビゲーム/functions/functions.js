@@ -27,10 +27,7 @@ document.addEventListener('DOMContentLoaded',
   function () {
     'use strict';
 
-    let enemySizeupTimer; // 敵機の拡大処理で使用
 
-    let lvl; // 画面上の Score 表示要素格納
-    lvl = document.querySelector('#level'); // 格納しとく
 
     let l; // 画面上の Life 表示要素格納
     l = document.querySelector('#life'); // 格納しとく
@@ -58,8 +55,8 @@ document.addEventListener('DOMContentLoaded',
       //enemyA[i].height = enemySize[i] + "px";
 
         // 拡大処理
-        if (enemySizeA[i] < 200) {
-        //if (enemySizeA[i] < eSizeMax[i]) { // ネタ +++++++++++++++++++++++++++++++++++++++++++++++
+        //if (enemySizeA[i] < 200) {
+        if (enemySizeA[i] < eSizeMax[i]) { // ネタ +++++++++++++++++++++++++++++++++++++++++++++++
           enemySizeA[i] += eSpeed[i]*enemySizeupStopper;
           //console.log(enemySize[i]); //
           enemyA[i].style.width = enemySizeA[i] + "px";
@@ -69,8 +66,8 @@ document.addEventListener('DOMContentLoaded',
         } // if文の閉じ ここまでは正常に機能してる
 
         // ダメージ判定部
-        if (enemySizeA[i] >= 200) {      
-        //if (enemySizeA[i] >= eSizeMax[i]) { // ネタ ++++++++++++++++++++++++++++++++++++++++++++++
+        //if (enemySizeA[i] >= 200) {      
+        if (enemySizeA[i] >= eSizeMax[i]) { // ネタ ++++++++++++++++++++++++++++++++++++++++++++++
 
           life -= eAttack[i];
           popEnemyA(i); // mouseMove.js の関数
@@ -79,14 +76,24 @@ document.addEventListener('DOMContentLoaded',
           // 敵機は小さいのが再ポップしてる。
        
           //ダメージエフェクト
-          let manDamage = document.querySelector('.manDamage');
+          let manDamageX; // 被ダメージエフェクトのｘ座標格納用
+          let manDamageY; // 被ダメージエフェクトのｙ座標格納用
+          let manDamageBlood;
+          let manDamage; // 被ダメージエフェクトの要素格納用(画像ではないので寸法取得できない？)
+          manDamageBlood = document.querySelector('.manDamageBlood'); // 画像の要素取得
+          manDamageX = (frameWidth / 2) - (manDamageBlood.width / 2);
+          manDamageY = (frameHeight) - (manDamageBlood.width*(manDamageBlood.naturalWidth/manDamageBlood.naturalHeight));
+          manDamage = document.querySelector('.manDamage');
           manDamage.style.display = 'block';
+          manDamage.style.left = manDamageX + 'px';
+          manDamage.style.top = manDamageY + 'px';
+
   
           let damageNone = function () {
             manDamage.style.display = 'none';
           } // damageNone の閉じ
 
-          setTimeout(damageNone, 3000);
+          setTimeout(damageNone, 1000);
 
           // 被ダメージモーション
           recoil = -100; // 反動は大きく
@@ -122,8 +129,6 @@ document.addEventListener('DOMContentLoaded',
         playBgm2(); // audio.js の関数
         document.querySelector('#result').textContent = '最終スコア：' + score;
 
-
-
         // 全ての敵機を待機位置に。
         level = 0;
         firstE = 0;
@@ -132,41 +137,10 @@ document.addEventListener('DOMContentLoaded',
 
         callTrickA = 100; // 逆さまオバケ出現管理用 出ないようにするだけ。
 
-        aLeft.style.display = 'none'; // 警告矢印消し。機能してないような・・・。 
-        aRight.style.display = 'none';
-        aTop.style.display = 'none';
-        aBottom.style.display = 'none';
-
-
-
-
       } // if文の閉じ
 
 
-      // 逆さまオバケ出現条件
-      if (score >= 800 && callTrickA === 0　) { // 800点以上かつ管理変数の値が０ならば
-        trickA_1_Down(); // trickA.js の関数。 逆さまオバケ出現 
-        callTrickA = 1; // 条件外し。これがないと0.2秒ごとに出現する。 
-      } else if (score >= 2200 && callTrickA === 1　) {
-        trickA_1_Down(); // 逆さまオバケ
-        callTrickA = 2; 
-      } else if (score >= 4000 && callTrickA === 2　) {
-        trickA_2_Down(); // ピエロ
-        callTrickA = 3;
-      } else if (score >= 6500 && callTrickA === 3　) {
-        trickA_2_Down(); // ピエロ
-        callTrickA = 4;
-      } else if (score >= 9000 && callTrickA === 4　) {
-        trickA_1_Down(); // オバケ
-        callTrickA = 5;
-      } else if (score >= 12000 && callTrickA === 5　) {
-        trickA_2_Down(); // ピエロ
-        callTrickA = 6;
-      } else if (score >= 16000 && callTrickA === 6　) {
-        trickA_1_Down(); // オバケ
-        callTrickA = 7;
-      } // else if 文の閉じ
-      // GameStart時、GameOver時に callTrickA を０にしておく。
+ 
 
  /*--------------------------------------------------------------------------------------
 
@@ -176,78 +150,6 @@ document.addEventListener('DOMContentLoaded',
 
   --------------------------------------------------------------------------------------*/
 
-      /*---- スコアによる敵機の再配置 ----*/
-      // 200ミリ秒毎にチェックされてる。
-      if (score >= 1000 && level === 1) {
-        clearTimeout(enemySizeupTimer);
-        // これがないと、敵の種類を変えるごとに拡大が加速する。
-        level = 2;
-        lvl.textContent = 'level : ' + level;
-        firstE = 1;
-        lastE = 4;
-        setEnemies(); // mouseMove.js の関数(first と last で指定された範囲の敵機をフレーム内に配置する。)
-        enemySizeup(); // 拡大開始
-      } else if (score >= 2000 && level === 2) {
-        clearTimeout(enemySizeupTimer);
-        level = 3;
-        lvl.textContent = 'level : ' + level;
-        firstE = 2;
-        lastE = 5;
-        setEnemies(); //  mouseMove.js の関数
-        enemySizeup(); // 拡大開始
-      } else if (score >= 3000 && level === 3) {
-        clearTimeout(enemySizeupTimer);
-        level = 4;
-        lvl.textContent = 'level : ' + level;
-        firstE = 4;
-        lastE = 7;
-        setEnemies(); //  mouseMove.js の関数
-        enemySizeup(); // 拡大開始
-      } else if (score >= 4000 && level === 4) {
-        clearTimeout(enemySizeupTimer);
-        level = 5;
-        lvl.textContent = 'level : ' + level;
-        firstE = 5;
-        lastE = 8;
-        setEnemies(); // mouseMove.js の関数
-        enemySizeup(); // 拡大開始
-      } else if (score >= 5000 && level === 5) {
-        clearTimeout(enemySizeupTimer);
-        level = 6;
-        lvl.textContent = 'level : ' + level;
-        firstE = 6;
-        lastE = 9;
-        setEnemies(); // mouseMove.js の関数
-        enemySizeup(); // 拡大開始
-      } else if (score >= 6000 && level === 6) {
-        clearTimeout(enemySizeupTimer);
-        level = 7;
-        lvl.textContent = 'level : ' + level;
-        firstE = 6;
-        lastE = 10;
-        setEnemies(); // mouseMove.js の関数
-        enemySizeup(); // 拡大開始
-      } else if (score >= 7000 && level === 7) {
-        clearTimeout(enemySizeupTimer);
-        level = 8;
-        lvl.textContent = 'level : ' + level;
-        firstE = 5;
-        lastE = 10;
-        setEnemies(); // mouseMove.js の関数
-        enemySizeup(); // 拡大開始
-      } else if (score >= 8000 && level === 8) {
-        clearTimeout(enemySizeupTimer);
-        level = 9;
-        lvl.textContent = 'level : ' + level;
-        firstE = 0;
-        lastE = 7;
-        setEnemies(); // mouseMove.js の関数
-        enemySizeup(); // 拡大開始
-      } // else if 文の閉じ
-
-     　/*---------------------------
-        スコアによる敵の再配置ここまで
-　　　　 ----------------------------*/
 
 
 
@@ -341,39 +243,33 @@ document.addEventListener('DOMContentLoaded',
 
       } // switch の閉じ
       
-      if ( largestEnemyX <= 0 && aLeft.style.display === 'none' && life > 0){ // 左の画面外にいるならば
+      if ( largestEnemyX <= 0 && life > 0){ // 左の画面外にいるならば
         //console.log('左アラート');
-        aLeft.style.display = 'block';
-        aRight.style.display = 'none'; // 無駄な記述かもしれない。
-        aTop.style.display = 'none';
-        aBottom.style.display = 'none';
+        aLeft.style.left = 0 + 'px';
+        aLeft.style.top = (frameHeight / 2 - aLeft.height / 2) + 'px';
 
-      } else if ( largestEnemyX >= frameWidth && aRight.style.display === 'none' && life > 0){ // 右の画面外にいるならば
+      } else if ( largestEnemyX >= frameWidth && life > 0){ // 右の画面外にいるならば
         //console.log('右アラート');
-        aLeft.style.display = 'none';
-        aRight.style.display = 'block';
-        aTop.style.display = 'none';
-        aBottom.style.display = 'none';
+        aRight.style.top = (frameHeight / 2 - aRight.height / 2) + 'px';
+        aRight.style.left = (frameWidth - aRight.width) + 'px';
 
-      } else if ( largestEnemyY <= 0 && aTop.style.display === 'none' && life > 0){ // 上の画面外にいるならば
+      } else if ( largestEnemyY <= 0 && life > 0){ // 上の画面外にいるならば
         //console.log('上アラート');
-        aLeft.style.display = 'none';
-        aRight.style.display = 'none';        
-        aTop.style.display = 'block';
-        aBottom.style.display = 'none';
+        aTop.style.left = (frameWidth / 2 - aTop.width / 2) + 'px';
+        aTop.style.top = 0 + 'px';
 
-      } else if ( largestEnemyY >= frameHeight && aBottom.style.display === 'none' && life > 0) { // 下の画面外にいるならば
+      } else if ( largestEnemyY >= frameHeight && life > 0) { // 下の画面外にいるならば
         //console.log('下アラート');
-        aLeft.style.display = 'none';
-        aRight.style.display = 'none';        
-        aTop.style.display = 'none';
-        aBottom.style.display = 'block';
+        aBottom.style.top = (frameHeight - aBottom.height) + 'px';
+        aBottom.style.left = (frameWidth / 2 - aBottom.width / 2) + 'px';
+
       } else if (largestEnemyX >= 0 && largestEnemyX <= frameWidth && largestEnemyY >= 0 && largestEnemyY <= frameHeight){ 
         // マークしてる敵が画面内にいるならば
-        aLeft.style.display = 'none';
-        aRight.style.display = 'none';
-        aTop.style.display = 'none';
-        aBottom.style.display = 'none';
+        aLeft.style.left = -500 + 'px';
+        aRight.style.left = -500 + 'px';
+        aTop.style.left = -500 + 'px';
+        aBottom.style.left = -500 + 'px';
+
         // 全部消せ、の意  
       }
 
@@ -390,8 +286,7 @@ document.addEventListener('DOMContentLoaded',
       // setTimeout は１回きりなので、全部の処理が終わる直前に入れるとループになる。
 
     } // enemySizeup の閉じ
-    //timer2 = setInterval(enemySizeup, 100);
-  //-----敵の拡大、攻撃処理 ここまで
+
 
 
   /*------------------

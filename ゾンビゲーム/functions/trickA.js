@@ -8,6 +8,7 @@
 /* ---- 関数の窓口 ---- */
 
 //let funcFreeA; // keyBoard.js キーボード「8」で呼び出し。
+let trickAchecker; //mouseMove.js から呼び出される。
 
 let trickA_1_Down; // 逆さまオバケの画像を下に下げてくる関数。 チートキー「」
 let trickA_2_Down; // コピー生産。 チートキー「 d 」
@@ -94,6 +95,15 @@ document.addEventListener('DOMContentLoaded',
     // let a1Up; // オバケを上に上げる動き 関数の窓口に引っ越し
     let a2Down; // 関数。オバケを登場させる動き
 
+    let punchX;
+    let punchY; // パンチのｙ座標格納用
+    let punch = document.querySelector('#punch'); // パンチエフェクトの要素格納
+
+
+    let removePunch; // パンチを撤去
+
+    let upper; // パンチを上へ移動。
+
     /*--------------
       ローカル関数
     --------------*/
@@ -104,11 +114,7 @@ document.addEventListener('DOMContentLoaded',
       // A1Yはローカル変数宣言で宣言＋代入。timerも変数宣言で宣言
       a1Down = () => {
 
-<<<<<<< HEAD
         A1Y += 10; // どれくらいの速さで画像を下ろすか。
-=======
-        A1Y += 50; // どれくらいの速さで画像を下ろすか。
->>>>>>> 9fc600489c1bbfdb0c7dd8012dc2b4ee7bf1d3f6
 
         trickA_1Img.style.top = A1Y + 'px';
         timer = setTimeout(a1Down, 20);
@@ -118,10 +124,10 @@ document.addEventListener('DOMContentLoaded',
           clearTimeout(timer);
           trickA_1Img.style.top = A1Y + 'px';
         } // if文の閉じ
-        // 画面上部の10pxぐらいののすき間が謎。
 
       } // a1Down の閉じ
-      a1Down();
+      a1Down(); // trickA_1_down() が呼ばれると１度だけ処理される。
+      soundTrickAStart(); // audio.js の関数
 
 
 
@@ -174,9 +180,9 @@ document.addEventListener('DOMContentLoaded',
           clearTimeout(timer);
         } // if文の閉じ
 
-      } // a1Down の閉じ
-      a2Down();
-
+      } // a2Down の閉じ
+      a2Down(); // trickA_1_down() が呼ばれると１度だけ処理される。
+      soundTrickAStart(); // audio.js の関数
 
 
       let randomA_2 = Math.floor(Math.random() * 3);
@@ -237,48 +243,116 @@ document.addEventListener('DOMContentLoaded',
       // 上がりきったら停止
       if (A2Y <= -1 * (trickA_2Img.height)) { // 限界値を超えたら
         A2Y = -1 * (trickA_2Img.height); // 限界値を代入しとけ、の意
-        clearTimeout(timer);
+        clearTimeout(timer);      
       } // if文の閉じ
 
-    } // a1Up の閉じ
+    } // a2Up の閉じ
 
+
+    removePunch = () => {
+        punch.style.left = -500 + 'px';
+        punch.style.top = -500 + 'px'; 
+    }
+
+
+    upper = () => { // 画像を上へ。この中は20ミリ秒ループ
+
+      punchY -= 10;        
+      punch.style.top = punchY + 'px';
+      timer = setTimeout(upper, 20);
+
+      // 上がりきったら停止
+      if (punchY <= 100) { // 限界値を超えたら
+        punchY = 100; // 限界値を代入しとけ、の意
+        punch.style.top = punchY + 'px';
+        clearTimeout(timer);
+        let timer2 = setTimeout(removePunch,500);
+      } // if文の閉じ
+
+    } // upper の閉じ
 
 
     answer_esc = () => { // keyBoard.js から呼ばれる関数。関数の窓口設置済み
       if (esc === true) { // 変数 esc に true が入っているなら
         a1Up(); // 画像を上へ。元々上にいるなら動かない。
         a2Up(); // 画像を上へ。元々上にいるなら動かない。
-
+        soundTASPause();
+        soundTrickAPunch();
+        soundTrickAEscape();
         // 効果音、撃退エフェクト(パンチアイコンとか)の'block','none'処理はこのへん。
 
         text_esc.style.display = 'none'; // テキストを消す。
-      }
-    }
+        punchX = ( frameWidth/2 - punch.width/2 );
+        punchY = ( frameHeight/2 - punch.height/2 );
+        punch.style.left = punchX + 'px';
+        punch.style.top = punchY + 'px';
+        upper();
+      } // if の閉じ
+    } // answer_esc
 
     answer_l = () => { // keyBoard.js から呼ばれる関数。関数の窓口設置済み
       if (l === true) { // 変数 Ins に true が入っているなら
         a1Up(); // 画像を上へ。元々上にいるなら動かない。
         a2Up(); // 画像を上へ。元々上にいるなら動かない。
-
+        soundTASPause();
+        soundTrickAPunch();
+        soundTrickAEscape();
         // 効果音、撃退エフェクト(パンチアイコンとか)の'block','none'処理はこのへん。
 
         text_l.style.display = 'none'; // テキストを消す。
-      }
-    }
+        punchX = ( frameWidth/2 - punch.width/2 );
+        punchY = ( frameHeight/2 - punch.height/2 );
+        punch.style.left = punchX + 'px';
+        punch.style.top = punchY + 'px';
+        upper();
+      } // if の閉じ
+    } // answer_l
 
     answer_v = () => { // keyBoard.js から呼ばれる関数。関数の窓口設置済み
       if (v === true) { // 変数 v に true が入っているなら
         a1Up(); // 画像を上へ。元々上にいるなら動かない。
         a2Up(); // 画像を上へ。元々上にいるなら動かない。
-
+        soundTASPause();
+        soundTrickAPunch();
+        soundTrickAEscape();
         // 効果音、撃退エフェクト(パンチアイコンとか)の'block','none'処理はこのへん。
 
         text_v.style.display = 'none'; // テキストを消す。
-      }
-    }
+        punchX = ( frameWidth/2 - punch.width/2 );
+        punchY = ( frameHeight/2 - punch.height/2 );
+        punch.style.left = punchX + 'px';
+        punch.style.top = punchY + 'px';
+        upper();
+      } // if の閉じ
+    } // answer_v
     // テキストを表示させるようにhtml,cssをいじる。
-    // あのテキストの表示の仕方は、もっと上手い方法があると思う。
+    // あのテキストの表示の仕方は、もっと上手い方法があると思う。     // 逆さまオバケ出現条件
 
+    trickAchecker = () => { // 点数が入るたびに mouseMove.js から呼び出される。 
+      if (score >= 800 && callTrickA === 0) { // 800点以上かつ管理変数の値が０ならば
+        trickA_1_Down(); // trickA.js の関数。 逆さまオバケ出現 
+        callTrickA = 1; // 条件外し。これがないと0.2秒ごとに出現する。 
+      } else if (score >= 2200 && callTrickA === 1) {
+        trickA_1_Down(); // 逆さまオバケ
+        callTrickA = 2;
+      } else if (score >= 4000 && callTrickA === 2) {
+        trickA_2_Down(); // ピエロ
+        callTrickA = 3;
+      } else if (score >= 6500 && callTrickA === 3) {
+        trickA_2_Down(); // ピエロ
+        callTrickA = 4;
+      } else if (score >= 9000 && callTrickA === 4) {
+        trickA_1_Down(); // オバケ
+        callTrickA = 5;
+      } else if (score >= 12000 && callTrickA === 5) {
+        trickA_2_Down(); // ピエロ
+        callTrickA = 6;
+      } else if (score >= 16000 && callTrickA === 6) {
+        trickA_1_Down(); // オバケ
+        callTrickA = 7;
+      } // else if 文の閉じ
+      // GameStart時、GameOver時に callTrickA を０にしておく。
+    } //trickAchecker の閉じ
 
     /*--------------------------------------------
         ５号 「 画像のサイズ、縦横比に自由度を持たせる。 」

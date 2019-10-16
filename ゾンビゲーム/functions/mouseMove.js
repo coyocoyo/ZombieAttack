@@ -19,6 +19,7 @@ let removeEnemy; // function.js から呼び出されてる。
 let removeTarget; // weapon.js から呼び出される。
 let removePlayer; // weapon.js から呼び出される。
 let hitJudge; // weapon.js から呼び出される。
+let levelChecker; // スコアによって敵の出現を変える関数。チートキーからの呼び出しあり。
 // 他のjsファイルからの関数呼び出しリクエストを受け止めるために
 // ローカルにある関数の'名前だけ'グローバルで宣言しておく。
 
@@ -100,6 +101,8 @@ document.addEventListener('DOMContentLoaded',
     // クリックイベントから外の.jsファイルの関数を呼び出せなかった。
     // mouseShootを呼んで、そこから shoot.js の shoot(); を呼び出す。
 
+
+
     /*---------------------------------------
             外部から呼ばれる関数の本定義
     ----------------------------------------*/
@@ -108,7 +111,7 @@ document.addEventListener('DOMContentLoaded',
              当たり判定
     --------------------------*/
 
-    hitJudge = () =>{
+    hitJudge = () => {
       for (let i = firstE; i < lastE; i++) {
         //enemyA[i] = document.querySelector("#enemyA" + i);
         // ゲームスタート時に配列内の全要素が取得されてる。 
@@ -127,7 +130,7 @@ document.addEventListener('DOMContentLoaded',
             (targetY + target.height) >= enemyAY[i]
             &&
             (enemyAY[i] + enemySizeA[i] / (enemyA[i].naturalWidth / enemyA[i].naturalHeight)) >= (targetY)
-            ) {
+          ) {
             // console.log('座標 ' + enemyAX[i] +',' + enemyAY[i] +' にて enemyA' +i +' に当たり判定');
 
             soundHit1(); // audio.jsの関数呼び出し
@@ -146,10 +149,13 @@ document.addEventListener('DOMContentLoaded',
               // 爆発
               soundDestroy1(); // audio.jsの呼び出し
               score += eScore[i];
+              levelChecker();
               // 敵毎にもらえる点数を個別に設定してる。
               // enemySizeA[i]がスコープ的にまだ有効なので
               // 記述を 「 score = eScore[i] - enemySizeA[i] 」 にすると
               // 「 敵が小さいうちに倒すと高得点 」 にできる。実装はしていない。
+
+              trickAchecker(); // trickA.js の関数
 
               //s = document.querySelector('score'); // ページロード時に要素格納済み。変数宣言で。
               //console.log(score);
@@ -188,7 +194,7 @@ document.addEventListener('DOMContentLoaded',
       // ページロード時に全要素がすでに格納されてる。 global.js での宣言時に。
       enemySizeA[i] = 10;
       enemyA[i].style.width = enemySizeA[i] + 'px';
-      enemyA[i].style.height = enemySizeA[i]/(enemyA[i].naturalWidth/enemyA[i].naturalHeight) + 'px';
+      enemyA[i].style.height = enemySizeA[i] / (enemyA[i].naturalWidth / enemyA[i].naturalHeight) + 'px';
       // 画像縮小
       enemyA[i].style.left = 110 + 'px';
       enemyA[i].style.top = 10 + 'px';
@@ -211,10 +217,10 @@ document.addEventListener('DOMContentLoaded',
 
       Xrate = Math.floor(Math.random() * 100);
       //console.log(Xrate);
-      if ( Xrate <= leftLimit ){ // 30以下(左過ぎて照準が届かない)なら
-      Xrate = leftLimit; // 30にしとけ、の意
-      } else if ( Xrate >= rightLimit ){ // 70以上(右過ぎて照準が届かない)なら
-      Xrate = rightLimit; // 70にしとけ、の意
+      if (Xrate <= leftLimit) { // 30以下(左過ぎて照準が届かない)なら
+        Xrate = leftLimit; // 30にしとけ、の意
+      } else if (Xrate >= rightLimit) { // 70以上(右過ぎて照準が届かない)なら
+        Xrate = rightLimit; // 70にしとけ、の意
       } // if文の閉じ
 
       posX = Math.floor(bgimg.width / 100 * Xrate) + bgimgX;// x座標決定
@@ -224,9 +230,9 @@ document.addEventListener('DOMContentLoaded',
       let bottomLimit = 70;
 
       Yrate = Math.floor(Math.random() * 100);
-      if ( Yrate <= topLimit ){ // 60以下(上過ぎて照準が届かない)なら
+      if (Yrate <= topLimit) { // 60以下(上過ぎて照準が届かない)なら
         Yrate = topLimit; // 60にしとけ、の意
-      } else if ( Yrate >= bottomLimit ){ // 70以上(下過ぎて照準が届かない)なら
+      } else if (Yrate >= bottomLimit) { // 70以上(下過ぎて照準が届かない)なら
         Yrate = bottomLimit; // 70にしとけ、の意
       } // if文の閉じ
 
@@ -301,7 +307,7 @@ document.addEventListener('DOMContentLoaded',
       Player = document.querySelector('#Player_' + i); // i 番の主人公の画像の要素を取得。
 
       playerX = (frameWidth / 2) - (Player_Width / 2); // Player_Width → global.js の変数宣言参照。 
-      playerY = (frameHeight) - (Player_Width*(Player.naturalWidth/Player.naturalHeight));
+      playerY = (frameHeight) - (Player_Width * (Player.naturalWidth / Player.naturalHeight));
 
       Player.style.left = playerX + 'px';
       Player.style.top = playerY + 'px';
@@ -338,6 +344,91 @@ document.addEventListener('DOMContentLoaded',
     /*-------------
     -------------*/
 
+
+
+      /*----------------------- 
+        スコアによる敵機の再配置
+      -----------------------*/
+      // 点数が入るたびにチェック。
+    levelChecker = () =>{  
+      if (score >= 1000 && level === 1) {
+        clearTimeout(enemySizeupTimer);
+        // これがないと、敵の種類を変えるごとに拡大が加速する。
+        level = 2;
+        lvl.textContent = 'level : ' + level;
+        firstE = 1;
+        lastE = 4;
+        setEnemies(); // mouseMove.js の関数(first と last で指定された範囲の敵機をフレーム内に配置する。)
+        enemySizeup(); // 拡大開始
+      } else if (score >= 2000 && level === 2) {
+        clearTimeout(enemySizeupTimer);
+        level = 3;
+        lvl.textContent = 'level : ' + level;
+        firstE = 2;
+        lastE = 5;
+        setEnemies(); //  mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 3000 && level === 3) {
+        clearTimeout(enemySizeupTimer);
+        level = 4;
+        lvl.textContent = 'level : ' + level;
+        firstE = 4;
+        lastE = 7;
+        setEnemies(); //  mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 4000 && level === 4) {
+        clearTimeout(enemySizeupTimer);
+        level = 5;
+        lvl.textContent = 'level : ' + level;
+        firstE = 5;
+        lastE = 8;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 5000 && level === 5) {
+        clearTimeout(enemySizeupTimer);
+        level = 6;
+        lvl.textContent = 'level : ' + level;
+        firstE = 6;
+        lastE = 9;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 6000 && level === 6) {
+        clearTimeout(enemySizeupTimer);
+        level = 7;
+        lvl.textContent = 'level : ' + level;
+        firstE = 6;
+        lastE = 10;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 7000 && level === 7) {
+        clearTimeout(enemySizeupTimer);
+        level = 8;
+        lvl.textContent = 'level : ' + level;
+        firstE = 5;
+        lastE = 10;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } else if (score >= 8000 && level === 8) {
+        clearTimeout(enemySizeupTimer);
+        level = 9;
+        lvl.textContent = 'level : ' + level;
+        firstE = 0;
+        lastE = 7;
+        setEnemies(); // mouseMove.js の関数
+        enemySizeup(); // 拡大開始
+      } // else if 文の閉じ
+    } // levelChecker の閉じ
+     　/*---------------------------
+        スコアによる敵の再配置ここまで
+　　　　 ----------------------------*/
+
+
+
+
+
+
+
+
     /*-------------------------------------
                 マウス移動イベント
     --------------------------------------*/
@@ -359,75 +450,75 @@ document.addEventListener('DOMContentLoaded',
 
       }, interval); // setTimeout の閉じ
 
-        // 引き算
-        diffX = beforeX - afterX;
-        diffY = beforeY - afterY;
-        // diffX : マウスを右に動かすと正、左に動かすと負。 速めに動かすと 10~
-        // diffY : マウスを下に動かすと正、上に動かすと負。 速めに動かすと 10~
-        // マウスが動いた方向とおよその移動量が分かる。
-        // 背景と敵機の爆発の３つに適用する。
-        
-        bgimgX += diffX * scrollrate; // 背景画像の仮のx座標
-        bgimgY += diffY * scrollrate; // 背景画像の仮のy座標
+      // 引き算
+      diffX = beforeX - afterX;
+      diffY = beforeY - afterY;
+      // diffX : マウスを右に動かすと正、左に動かすと負。 速めに動かすと 10~
+      // diffY : マウスを下に動かすと正、上に動かすと負。 速めに動かすと 10~
+      // マウスが動いた方向とおよその移動量が分かる。
+      // 背景と敵機の爆発の３つに適用する。
 
-        // x 座標の代入。 限界値を超えていたら限界値を代入。
-        // 1回の処理で10px動くこともある。限界値を超えた値を代入させると面倒なことになる。
-        if (bgimgX >= 0) {
-          bgimgX = 0;
-          bgimg.style.left = bgimgX + 'px';
-        } else if ((frameWidth - bgimg.width) >= bgimgX) {
-          bgimgX = (frameWidth - bgimg.width);
-          bgimg.style.left = bgimgX + 'px';
-        } else {
-          bgimg.style.left = bgimgX + 'px';
+      bgimgX += diffX * scrollrate; // 背景画像の仮のx座標
+      bgimgY += diffY * scrollrate; // 背景画像の仮のy座標
+
+      // x 座標の代入。 限界値を超えていたら限界値を代入。
+      // 1回の処理で10px動くこともある。限界値を超えた値を代入させると面倒なことになる。
+      if (bgimgX >= 0) {
+        bgimgX = 0;
+        bgimg.style.left = bgimgX + 'px';
+      } else if ((frameWidth - bgimg.width) >= bgimgX) {
+        bgimgX = (frameWidth - bgimg.width);
+        bgimg.style.left = bgimgX + 'px';
+      } else {
+        bgimg.style.left = bgimgX + 'px';
+      }
+
+      // y 座標の代入。 限界値を超えていたら限界値を代入。
+      if (bgimgY >= 0) {
+        bgimgY = 0;
+        bgimg.style.top = bgimgY + 'px';
+      } else if ((frameHeight - bgimg.height) >= bgimgY) {
+        bgimgY = (frameHeight - bgimg.height);
+        bgimg.style.top = bgimgY + 'px';
+      } else {
+        bgimg.style.top = bgimgY + 'px';
+      }
+
+      // 敵機も一緒になって動く
+
+      for (let i = firstE; i < lastE; i++) {
+
+        if (bgimgX !== 0 && bgimgX !== (frameWidth - bgimg.width)) { // 背景が限界値なら動かない
+          enemyA[i].style.left = (enemyAX[i] += diffX * scrollrate) + 'px';
         }
 
-        // y 座標の代入。 限界値を超えていたら限界値を代入。
-        if (bgimgY >= 0) {
-          bgimgY = 0;
-          bgimg.style.top = bgimgY + 'px';
-        } else if ((frameHeight - bgimg.height) >= bgimgY) {
-          bgimgY = (frameHeight - bgimg.height);
-          bgimg.style.top = bgimgY + 'px';
-        } else {
-          bgimg.style.top = bgimgY + 'px';
+        //console.log(document.querySelector('#enemyA' +i ).style.left);
+
+        if (bgimgY !== 0 && bgimgY !== (frameHeight - bgimg.height)) { // 背景が限界値なら動かない
+          enemyA[i].style.top = (enemyAY[i] += diffY * scrollrate) + 'px';
         }
 
-        // 敵機も一緒になって動く
+        //console.log(document.querySelector('#enemyA' +i ).style.top);
 
-        for (let i = firstE; i < lastE; i++) {
+        // 命中エフェクトも一緒になって動く。が、普段は動かない。
+        if (bgimgX !== 0 && bgimgX !== (frameWidth - bgimg.width)) {
+          Hit0.style.left = (HitX += diffX * scrollrate * stopper2) + 'px';
+        }
 
-          if (bgimgX !== 0 && bgimgX !== (frameWidth - bgimg.width)) { // 背景が限界値なら動かない
-            enemyA[i].style.left = (enemyAX[i] += diffX * scrollrate) + 'px';
-          }
+        if (bgimgY !== 0 && bgimgY !== (frameHeight - bgimg.height)) {
+          Hit0.style.top = (HitY += diffY * scrollrate * stopper2) + 'px';
+        }
 
-          //console.log(document.querySelector('#enemyA' +i ).style.left);
+        // 爆発も一緒になって動く。が、普段は動かない。
+        if (bgimgX !== 0 && bgimgX !== (frameWidth - bgimg.width)) {
+          explosion.style.left = (explosionX += diffX * scrollrate * stopper1) + 'px';
+        }
 
-          if (bgimgY !== 0 && bgimgY !== (frameHeight - bgimg.height)) { // 背景が限界値なら動かない
-            enemyA[i].style.top = (enemyAY[i] += diffY * scrollrate) + 'px';
-          }
+        if (bgimgY !== 0 && bgimgY !== (frameHeight - bgimg.height)) {
+          explosion.style.top = (explosionY += diffY * scrollrate * stopper1) + 'px';
+        }
 
-          //console.log(document.querySelector('#enemyA' +i ).style.top);
-
-          // 命中エフェクトも一緒になって動く。が、普段は動かない。
-          if (bgimgX !== 0 && bgimgX !== (frameWidth - bgimg.width)) {
-            Hit0.style.left = (HitX += diffX * scrollrate * stopper2) + 'px';
-          }
-
-          if (bgimgY !== 0 && bgimgY !== (frameHeight - bgimg.height)) {
-            Hit0.style.top = (HitY += diffY * scrollrate * stopper2) + 'px';
-          }
-
-          // 爆発も一緒になって動く。が、普段は動かない。
-          if (bgimgX !== 0 && bgimgX !== (frameWidth - bgimg.width)) {
-            explosion.style.left = (explosionX += diffX * scrollrate * stopper1) + 'px';
-          }
-
-          if (bgimgY !== 0 && bgimgY !== (frameHeight - bgimg.height)) {
-            explosion.style.top = (explosionY += diffY * scrollrate * stopper1) + 'px';
-          }
-
-        } // for文の閉じ
+      } // for文の閉じ
 
     }; // onmousemoveの閉じ
 
@@ -491,8 +582,8 @@ document.addEventListener('DOMContentLoaded',
 
 
 
-     setBgimg(); // 1回のページリロードにつき1回だけの処理 id=bgimg0 の背景画像を呼び出している。
-     // 意味がなくなった。が、コメにするとエラーが出る。背景画像の要素を必要とする処理がページロード直後にあるらしい。忘れた。
+    setBgimg(); // 1回のページリロードにつき1回だけの処理 id=bgimg0 の背景画像を呼び出している。
+    // 意味がなくなった。が、コメにするとエラーが出る。背景画像の要素を必要とする処理がページロード直後にあるらしい。忘れた。
 
   }, false); // DOMCon... の閉じ
 

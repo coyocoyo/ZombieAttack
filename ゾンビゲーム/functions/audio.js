@@ -21,6 +21,10 @@ let playBgm2; //game overのbgm
 let soundZombieVoive1; //ゾンビボイス
 let soundReload1; //銃リロード音
 let soundNoBullet1; //残弾数0の発射音
+let soundTrickAStart; // 逆さまオバケの登場音
+let soundTASPause; // 逆さまオバケ登場音の一時停止
+let soundTrickAPunch; // 逆さまオバケの登場音
+let soundTrickAEscape; // 逆さまオバケの登場音
 
 
 // 外部からの関数を呼び出しを受け止めるために
@@ -50,7 +54,9 @@ document.addEventListener('DOMContentLoaded',
     let Bgm2 = document.querySelector('#Bgm2');
     let ZombieVoice1 = document.querySelector('#soundZombieVoice1');
     let NoBullet1 = document.querySelector('#noBullet1');
-
+    let trickAStart = document.querySelector('#trickAstart');
+    let trickAPunch = document.querySelector('#trickAPunch');
+    let trickAEscape = document.querySelector('#trickAEscape');
 
 
     let R = 1; // ローテーション用変数 初期値 1
@@ -132,7 +138,28 @@ document.addEventListener('DOMContentLoaded',
       NoBullet1.play();
     }
 
+    soundTrickAStart = () =>{
+      trickAStart.currentTime = 0;
+      trickAStart.volume = 0.6; // 0 ~ 1 で設定する。
+      trickAStart.play();
+    }
 
+    soundTASPause = () =>{
+      trickAStart.pause();
+      trickAStart.currentTime = 0;
+    }
+
+    soundTrickAPunch = () =>{
+      trickAPunch.currentTime = 0;
+      trickAPunch.volume = 1; // 0 ~ 1 で設定する。
+      trickAPunch.play();
+    }
+
+    soundTrickAEscape = () =>{
+      trickAEscape.currentTime = 0;
+      trickAEscape.volume = 1; // 0 ~ 1 で設定する。
+      trickAEscape.play();
+    }
 
 
   }, false); // DOMCon... の閉じ

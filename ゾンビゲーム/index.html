@@ -60,6 +60,17 @@
   <audio preload="auto" id="Bgm2" loop>
     <source src="audio_files/game over music.mp3" preload="auto"> </audio>
 
+  <!-- 逆さまオバケ登場 -->
+  <audio preload="auto" id="trickAstart">
+    <source src="audio_files/kimowarai.wav"></audio>
+
+  <!-- 逆さまオバケ撃退音　パンチ -->
+  <audio preload="auto" id="trickAPunch">
+    <source src="audio_files/tsukkomi_1.mp3"></audio>
+
+  <!-- 逆さまオバケ退散音　ポウン -->
+  <audio preload="auto" id="trickAEscape">
+    <source src="audio_files/stupid3.mp3"></audio>    
 
 
 
@@ -70,13 +81,14 @@
 
 
     <div class="game__inner">
+      <img class="start1" src="img/start1.jpg" alt="start1">
+      <img class="start2" src="img/start2.jpg" alt="start2">
 
 
       <img src="img/man.png" alt="" id="Player_0"><!-- 主人公(拳銃) -->
 
-      <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
-      <img src="img/man.png" alt="" id="Player_1"><!-- 主人公(ショットガン)の画像をお願いします。 -->
-      <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+      <img src="img/manShotgun.png" alt="" id="Player_1"><!-- 主人公(ショットガン) -->
+
 
       <img src="img/back-ground-01.jpg" alt="" id="bgimg0">
       <img src="img/sampleTarget0.png" alt="" id="targetScope0"><!-- 拳銃用サンプルです。正方形なら大きさ自由 -->
@@ -91,13 +103,14 @@
       <img src="img/piero.png" alt="" id="enemyA6">
       <img src="img/deadman1.png" alt="" id="enemyA7">
       <img src="img/goast.png" alt="" id="enemyA8">
-      <img src="img/goast.png" alt="" id="enemyA9"><!-- 今のところ、10種類まで設定可能 -->
+      <img src="img/deadman1.png" alt="" id="enemyA9"><!-- 今のところ、10種類まで設定可能 -->
 
       <img src="img/trickA_1.png" alt="" id="trickA_1"><!-- 逆さまに出てくるオバケ１号 -->
       <img src="img/trickA_2.png" alt="" id="trickA_2"><!-- 逆さまに出てくるオバケ２号　サンプルです。 -->
       <h1 id='key__esc'>「esc」 を押せ！</h1><!-- 逆さまオバケ撃退用 -->
       <h1 id='key__l'>「 L 」 を押せ！</h1>
       <h1 id='key__v'>「 v 」 を押せ！</h1>
+      <img src="img/sample_punch.png" alt="" id="punch">
 
       <img src="img/alertTop.png" alt="" id="alertTop"><!-- 警告矢印 「上」 -->
       <img src="img/alertLeft.png" alt="" id="alertLeft"><!-- 警告矢印 「左」 -->
@@ -110,7 +123,7 @@
 
       <!--ダメージ-->
       <div class="manDamage">
-        <img class="manDamageBlood" src="img/man-damage.png" alt="manDamageBloo">
+        <img class="manDamageBlood" src="img/man-damage.png" alt="manDamageBlood">
       </div>
 
 
@@ -123,12 +136,13 @@
       </ul>
 
       <!--ゲームスタート画面-->
+      <!--
       <div class="game__start">
         <img class="start1" src="img/start1.jpg" alt="start1">
         <img class="start2" src="img/start2.jpg" alt="start2">
 
       </div>
-
+      -->
 
 
       <!--ゲームオーバー画面-->
@@ -143,7 +157,7 @@
 
     </div><!-- game__inner の閉じ -->
 
-        <div class="operation"><img src="img/game-operation.jpg"></div>
+    <div class="operation"><img src="img/game-operation.jpg"></div>
 
   </div><!-- game__wrapper の閉じ -->
 

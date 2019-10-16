@@ -66,10 +66,11 @@ ul li{
   height: 10px;
 width: 100px;
 position: relative;
-  z-index: 9;
+  z-index: 35;
 }
 
 .game__wrapper{
+  background-color: darkgray;
   padding:0px;
   height:500px;
   width:700px;
@@ -78,6 +79,7 @@ position: relative;
 
 .game__inner{
 /*margin-bottom:10px;*/
+background-color: darkgray;
 height:500px;
 width:700px;
 overflow:hidden;
@@ -90,7 +92,7 @@ position:relative;
   left:0;
   top:0;
   position:absolute;
-  z-index:5;
+  z-index:20;
   width: 500px;
   height: 500px;
   /*z-index: 5;*/
@@ -111,7 +113,7 @@ position:relative;
   position:absolute;
   top:10px;
   left:110px;
-  z-index:-10;
+  z-index:10;
   width: 10px;
   height: 10px;
 
@@ -120,12 +122,12 @@ position:relative;
 #trickA_1{ /* 逆さまに出てくるオバケ１ */
   /*display:'block';*/ 
   position:absolute;
-  z-index:11;
+  z-index:25;
   /* 主人公(cockpit_01):5か10 より奥だと拳銃の目の前になって 「そのまま撃てばいいじゃん」って思う。 */
   
   /* width: 400px; */ 
   /* height: 400px; */
-  /* こっちに寸法を書くと、.jsの言うことを聞かなくなるような。 */
+  /* こっちに寸法を書くと、.jsの言うことを聞かなくなるような。そんなことない？ */
   /* left:50px; */
   /* top:-400px; */
 }
@@ -133,69 +135,43 @@ position:relative;
 #trickA_2{ /* 逆さまに出てくるオバケ２ */
   /*display:'block';*/ 
   position:absolute;
-  z-index:11;
+  z-index:25;
 }
 
-#key__esc{ /* 逆さまオバケ撃退用テキスト */
-  font-size: 4rem;
-  display: none;
-  margin :auto auto; /*-- 記述の意味をよく分かっていない --*/
+#punch{ /* 逆さまオバケ撃退パンチ */
+  /*display:'block';*/ 
   position:absolute;
-  left:200px; /*-- この数字がいかにも素人・・・ --*/
-  top:250px; /*-- この数字がいかにも素人・・・ --*/
-  color: red;
-  z-index: 12;
+  top:-500px;
+  left:-500px;
+  width:150px;
+  height:150px;
+  z-index:26;
 }
 
-#key__l{ /* 逆さまオバケ撃退用テキスト */
-  font-size: 4rem;
-  display: none;
-  margin :auto auto;
-  position:absolute;
-  left:200px;
-  top:250px;
-  color: red;
-  z-index: 12;
-}
-
+#key__esc,
+#key__l,
 #key__v{ /* 逆さまオバケ撃退用テキスト */
   font-size: 4rem;
   display: none;
-  margin :auto auto;
-  position:absolute;
-  left:200px;
-  top:250px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top:200px;
+  position:relative;
   color: red;
-  z-index: 12;
+  width:400px;
+  height:100px;
+  z-index: 30;
 }
 
 #alertTop,
-#alertBottom {
-  display: none;
-  left:100px;
-  top:0;
+#alertBottom,
+#alertLeft,
+#alertRight { /*画面外でサイズが大きくなってる敵への矢印警告*/
+  display: block;
   position:absolute;
-  z-index:12;
-  width: 500px;
-  height: 500px;
-}
-
-#alertLeft {
-  display: none;
-  left:0;
-  top:0;
-  position:absolute;
-  z-index:12;
-  width: 500px;
-  height: 500px;
-}
-
-#alertRight {
-  display: none;
-  left:200px;
-  top:0;
-  position:absolute;
-  z-index:12;
+  top:-500px; /* left:-500px; だけでいいじゃん、って思った。 */
+  left:-500px;
+  z-index:35;
   width: 500px;
   height: 500px;
 }
@@ -205,7 +181,7 @@ position:relative;
   left:-500px;
   top:-500px;
   position:absolute;
-  z-index:-5;
+  z-index:10;
 }
 
 /* 背景 */
@@ -214,7 +190,7 @@ position:relative;
   left:0;
   top:0;
   position:absolute;
-  z-index:-20;
+  z-index:1;
 }
 
 /* 照準 */
@@ -223,14 +199,14 @@ position:relative;
   left:-500px;
   top:-500px;
   position:absolute;
-  z-index:0;
+  z-index:15;
 }
 
 #Hit0 {
   left:-500px;
   top:-500px;
   position:absolute;
-  z-index:-10;
+  z-index:10;
 }
 
 .operation {
@@ -240,6 +216,132 @@ position:relative;
 /* 　並べる　*/
 
 
+.start1 {
+  display:block;
+  position: absolute;
+  top:0;
+  left:100px;
+  height:500px;
+  width:500px;
+  z-index: 40;
+}
+
+.start2 {
+	position: absolute;
+  top:0;
+
+  left:100px;
+  height:500px;
+  width:500px;
+  z-index: 41;
+  }
+
+/*
+@keyframes start__a {
+  0%{
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.start1{  
+  animation-name: start__a;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+}
+*/
+
+@keyframes start__b {
+  0%{
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+
+.start2 {
+  animation-name: start__b;
+  animation-delay: 5s;
+  animation-iteration-count: infinite;
+
+}
+
+
+
+
+
+.game__over .over1 {
+	display: block;
+	margin: 0 auto;
+}
+
+.game__over .over2 {
+
+	position: absolute;
+	top: 0;
+	left: 0px;
+}
+
+/*  keyframs  */
+
+
+
+@keyframes game__over {
+	0%{
+    opacity: 1;
+  }
+	50% {
+		opacity: 1;
+	}
+
+}
+
+.game__over img {
+	animation-name: game__over;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	opacity: 0;
+}
+
+.game__over .over2 {
+	animation-delay: 2s;
+}
+
+
+@keyframes  manDamage{
+	0%{
+    opacity: 1;
+  }
+	100% {
+		opacity: 1;
+	}
+}
+
+.manDamage{
+  left:0;
+  top:0;
+  position:absolute;
+  z-index:26;
+  width: 500px;
+  height: 500px;
+  /*z-index: 5;*/
+  display: none;
+}
+
+/*
+   game__start;
+	animation-duration: 5s;
+	animation-iteration-count: 1;
+	opacity: 0;
+}
+*/
+
+
+/*
 .game__start .start1 {
 	display: block;
 	margin: 0 auto;
@@ -325,7 +427,7 @@ position:relative;
   z-index:10;
   width: 500px;
   height: 500px;
-  z-index: 5;
+  /*z-index: 5;*/
   display: none;
   
   
@@ -334,4 +436,4 @@ position:relative;
 	animation-iteration-count: 1;
 	opacity: 0;
 }
-
+*/

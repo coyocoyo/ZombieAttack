@@ -23,13 +23,13 @@
 const eDefaultLife0 = 1; // (ゾンビ)
 const eDefaultLife1 = 1; // (ゾンビ)
 const eDefaultLife2 = 1; // (女ゾンビ)
-const eDefaultLife3 = 2; // (ゴースト)
-const eDefaultLife4 = 2; // (ゴースト)
-const eDefaultLife5 = 3; // (ピエロ)
-const eDefaultLife6 = 3; // (ピエロ)
+const eDefaultLife3 = 3; // (ゴースト)
+const eDefaultLife4 = 3; // (ゴースト)
+const eDefaultLife5 = 2; // (ピエロ)
+const eDefaultLife6 = 2; // (ピエロ)
 const eDefaultLife7 = 6; // (ガイコツシスター)
-const eDefaultLife8 = 2; // (ゴースト)
-const eDefaultLife9 = 2; // (ゴースト)
+const eDefaultLife8 = 3; // (ゴースト)
+const eDefaultLife9 = 6; // (ガイコツシスター)
 
 /*-- 敵機のスピード --*/
 const eSpeed0 = 1; // (ゾンビ)
@@ -41,7 +41,7 @@ const eSpeed5 = 2; // (ピエロ)
 const eSpeed6 = 2; // (ピエロ)
 const eSpeed7 = 2; // (ガイコツシスター)
 const eSpeed8 = 1; // (ゴースト)
-const eSpeed9 = 1; // (ゴースト)
+const eSpeed9 = 2; // (ガイコツシスター)
 
 /*-- 敵機の攻撃力 --*/
 const eAttack0 = 5; // (ゾンビ)
@@ -53,7 +53,7 @@ const eAttack5 = 10; // (ピエロ)
 const eAttack6 = 10; // (ピエロ)
 const eAttack7 = 20; // (ガイコツシスター)
 const eAttack8 = 10; // (ゴースト)
-const eAttack9 = 5; // (ゴースト)
+const eAttack9 = 20; // (ガイコツシスター)
 
 /*-- 敵機の得点 --*/
 const eScore0 = 100; // (ゾンビ)
@@ -65,7 +65,7 @@ const eScore5 = 300; // (ピエロ)
 const eScore6 = 300; // (ピエロ)
 const eScore7 = 500; // (ガイコツシスター)
 const eScore8 = 200; // (ゴースト)
-const eScore9 = 200; // (ゴースト)
+const eScore9 = 500; // (ガイコツシスター)
 
 /*------------- ネタ ---------------*/
 /*---- 敵機の拡大最大値を個別設定 ----*/
@@ -79,7 +79,7 @@ const eSizeMax5 = 300; //(ピエロ)
 const eSizeMax6 = 300; //(ピエロ)
 const eSizeMax7 = 300; //(ガイコツシスター)
 const eSizeMax8 = 200; //(ゴースト)
-const eSizeMax9 = 200; //(ゴースト)
+const eSizeMax9 = 300; //(ガイコツシスター)
 
 /*
 // 今のところ、敵機が横幅200pxまで大きくなったらダメージを受けるようになっているが、
@@ -248,6 +248,10 @@ let Player3_Width = 500; // 未実装だけど念のため宣言・代入して�
 // どんなにサイズの大きな画像でも横幅500で調整されて表示される。
 // 縦長でもゆがまないが、頭が画面外にきれるので、ここの記述に気づく必要がある。
 
+
+
+
+
 let bgimg;
 // 背景画像の要素格納用
 // mouseMove.js と keyBoard.js が使ってるのでグローバルに。
@@ -257,6 +261,8 @@ let callTrickA = 0; // 逆さまオバケ出現管理、出現条件に使う。
 let text_esc = document.querySelector('#key__esc'); // 画面表示のテキスト要素を格納
 let text_l = document.querySelector('#key__l'); // 画面表示のテキスト要素を格納
 let text_v = document.querySelector('#key__v'); // 画面表示のテキスト要素を格納
+
+
 
 let weaponSelector = 0;
 // 構えてる武器の管理用変数。
@@ -268,11 +274,17 @@ let recovery = 'done'; // 射撃の反動から回復しているか否か。wea
 // done = 射撃可能。 yet = 反動から回復中
 
 let aTop, aLeft, aRight, aBottom; // 警告の赤い矢印画像の要素格納
-aTop = document.querySelector('#alertTop');
-aLeft = document.querySelector('#alertLeft');
-aRight = document.querySelector('#alertRight');
-aBottom = document.querySelector('#alertBottom');
 
+  aLeft = document.querySelector('#alertLeft'); 
+  aRight = document.querySelector('#alertRight');
+  aTop = document.querySelector('#alertTop');
+  aBottom = document.querySelector('#alertBottom');
+
+
+let enemySizeupTimer; // 敵機の拡大処理で使用
+
+let lvl; // 画面上の Level テキスト表示要素格納
+lvl = document.querySelector('#level'); // 格納しとく
 
 
 

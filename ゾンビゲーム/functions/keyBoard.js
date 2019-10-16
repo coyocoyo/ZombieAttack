@@ -77,13 +77,6 @@ document.addEventListener('DOMContentLoaded',
     let s; // 画面上の Score テキスト表示要素格納用
     s = document.querySelector('#score'); // 格納しとく
 
-    let lvl; // 画面上の Level テキスト表示要素格納用
-    lvl = document.querySelector('#level'); // 格納しとく
-
-
-
-
-
     /*-------------------------------------
                  キーダウンイベント
     --------------------------------------*/
@@ -98,6 +91,7 @@ document.addEventListener('DOMContentLoaded',
 
         case 's': // 開発用チートキー
           score += 1000; // スコアに1000加算
+          levelChecker(); // mouseMove.js の関数
           s.textContent = 'Score : ' + score; // s の要素はローカル変数宣言のところで取得済み。
           break;
 
@@ -185,7 +179,8 @@ document.addEventListener('DOMContentLoaded',
           // 配列０番～１番の敵を500x500フレーム内に呼び出して拡大モードにし、他は待機させておく関数
           enemySizeup(); // function.js の関数。敵機拡大開始
           document.querySelector('#result').textContent = '';
-          document.querySelector('.game__start').style.display = 'none';
+          document.querySelector('.start1').style.display = 'none';
+          document.querySelector('.start2').style.display = 'none';
           bgimg.style.display = 'block'; // 要素は setBgimg(); で取得済み。 setBgimg();がこの行より上にあればいい。
           s.style.display = 'block'; // 要素はローカルで取得済み
           lvl.style.display = 'block'; // 要素はローカルで取得済み
